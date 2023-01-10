@@ -1,4 +1,6 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# ----- Rust -----
 http_archive(
     name = "rules_rust",
     sha256 = "5c2b6745236f8ce547f82eeacbbcc81d736734cc8bd92e60d3e3cdfa6e167bb5",
@@ -20,19 +22,24 @@ crates_repository(
     lockfile = "//third_party:Cargo.lock",
     packages = {
         "clap": crate.spec(
-            version = "4.0.29"
+            version = "4.0.29",
         ),
         "oauth2": crate.spec(
-            version = "4.3.0"
+            version = "4.3.0",
         ),
         "reqwest": crate.spec(
-            version = "0.11.13"
+            version = "0.11.13",
         ),
     },
-    )
+)
 
 load(
     "@crate_index//:defs.bzl",
     "crate_repositories",
 )
+
 crate_repositories()
+
+load("@rules_rust//tools/rust_analyzer:deps.bzl", "rust_analyzer_dependencies")
+
+rust_analyzer_dependencies()

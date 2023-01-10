@@ -4,12 +4,12 @@ load("@rules_rust//rust:defs.bzl", "rust_binary")
 rust_binary(
     name = "backend",
     srcs = [
-        "src/main.rs"
+        "src/main.rs",
     ],
     edition = "2021",
-   deps =  [
-    "@crate_index//:clap",
-    "@crate_index//:oauth2",
-    "@crate_index//:reqwest"
-   ]
+    deps = [
+        "@crate_index//:clap",
+        "@crate_index//:oauth2",
+        "@crate_index//:reqwest",
+    ],
 )

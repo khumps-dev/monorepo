@@ -4,5 +4,14 @@
 	"name": "TheRepo",
 	"build": {
 		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"BazelBuild.vscode-bazel",
+				"rust-lang.rust-analyzer",
+				"HashiCorp.terraform"
+			]
+		}
 	}
 }
