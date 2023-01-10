@@ -1,4 +1,5 @@
 {
     "editor.formatOnSave": true,
-    "bazel.buildifierFixOnFormat": true
+    "bazel.buildifierFixOnFormat": true,
+    "git.requireGitUserConfig": false
 }
