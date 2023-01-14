@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/vscode/devcontainers/base:1.0-ubuntu22.04
 
-# RUN export DEBIAN_FRONTEND=noninteractive
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+    && echo "$SNIPPET" >> "/root/.bashrc"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
 g++ \
@@ -28,3 +29,11 @@ RUN install buildozer /usr/local/bin && rm buildozer
 # Terraform
 RUN wget https://releases.hashicorp.com/terraform/1.3.6/terraform_1.3.6_linux_amd64.zip -O terraform
 RUN unzip terraform -d /usr/local/bin
+
+# Github CLI
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+RUN chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+RUN  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
+gh

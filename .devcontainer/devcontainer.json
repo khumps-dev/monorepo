@@ -5,13 +5,21 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
+	"mounts": [
+		"source=therepo-bashhistory,target=/commandhistory,type=volume",
+	],
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"BazelBuild.vscode-bazel",
 				"rust-lang.rust-analyzer",
-				"HashiCorp.terraform"
+				"HashiCorp.terraform",
+				"GitHub.vscode-pull-request-github"
 			]
 		}
-	}
+	},
+	// "runArgs": [
+	// 	"--env-file",
+	// 	".devcontainer/devcontainer.env"
+	// ]
 }
