@@ -40,6 +40,10 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/g
 RUN wget https://github.com/facebook/sapling/releases/download/0.2.20221222-152408-ha6a66d09/sapling_0.2.20221222-152408-ha6a66d09_amd64.Ubuntu22.04.deb -O sapling.deb
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt install -y ./sapling.deb && rm sapling.deb
 
+# Kubectl
+RUN wget https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
+RUN install kubectl /usr/local/bin && rm kubectl
+
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     gh \
