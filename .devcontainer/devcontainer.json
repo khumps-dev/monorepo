@@ -6,7 +6,10 @@
 		"dockerfile": "Dockerfile"
 	},
 	"mounts": [
+		// Preserve bash history
 		"source=therepo-bashhistory,target=/commandhistory,type=volume",
+		// Preserve Github CLI storage
+		"source=therepo-github-cli,target=/root/.config/gh,type=volume"
 	],
 	"customizations": {
 		"vscode": {
@@ -17,9 +20,13 @@
 				"GitHub.vscode-pull-request-github"
 			]
 		}
-	},
-	// "runArgs": [
-	// 	"--env-file",
-	// 	".devcontainer/devcontainer.env"
-	// ]
+		// },
+		// "postCreateCommand": [
+		// 	".devcontainer/postCreate.sh"
+		// ]
+		// "runArgs": [
+		// 	"--env-file",
+		// 	".devcontainer/devcontainer.env"
+		// ]
+	}
 }

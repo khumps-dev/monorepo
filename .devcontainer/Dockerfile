@@ -1,18 +1,19 @@
-FROM mcr.microsoft.com/vscode/devcontainers/base:1.0-ubuntu22.04
+FROM ubuntu:jammy-20221130
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
     && echo "$SNIPPET" >> "/root/.bashrc"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
-g++ \
-git=1:2.34.1-1ubuntu1.5 \
-libssl-dev=3.0.2-0ubuntu1.7 \
-pkg-config \
-python3 \
-unzip \
-wget \
-zip \
-zlib1g-dev
+    curl \
+    g++ \
+    git=1:2.34.1-1ubuntu1.5 \
+    libssl-dev=3.0.2-0ubuntu1.7 \
+    pkg-config \
+    python3 \
+    unzip \
+    wget \
+    zip \
+    zlib1g-dev
 
 # Bazel
 RUN wget https://github.com/bazelbuild/bazel/releases/download/6.0.0/bazel-6.0.0-linux-x86_64 -O bazel
@@ -33,7 +34,17 @@ RUN unzip terraform -d /usr/local/bin
 # Github CLI
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 RUN chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-RUN  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list
+
+# Sapling CLI
+RUN wget https://github.com/facebook/sapling/releases/download/0.2.20221222-152408-ha6a66d09/sapling_0.2.20221222-152408-ha6a66d09_amd64.Ubuntu22.04.deb -O sapling.deb
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt install -y ./sapling.deb && rm sapling.deb
+
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
-gh
+    gh \
+    locales
+
+ENV LC_ALL="en_US.UTF-8"
+ENV LC_CTYPE="en_US.UTF-8"
+RUN dpkg-reconfigure locales
