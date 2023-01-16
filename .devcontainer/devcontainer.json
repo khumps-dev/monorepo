@@ -9,7 +9,7 @@
 		// Preserve bash history
 		"source=therepo-bashhistory,target=/commandhistory,type=volume",
 		// Preserve Github CLI storage
-		"source=therepo-github-cli,target=/root/.config/gh,type=volume",
+		"source=therepo-dot-config,target=/root/.config,type=volume",
 		// Preserve kubectl
 		"source=therepo-kubectl,target=/root/.kube,type=volume"
 	],
