@@ -1,3 +1,4 @@
 bazel*
 rust-project.json
 .devcontainer/devcontainer.env
+terraform/.terraform
