@@ -11,15 +11,20 @@ load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_regi
 
 rules_rust_dependencies()
 
-rust_register_toolchains()
+rust_register_toolchains(
+    # Versions must match rustup install in //.devcontainer/Dockerfile
+    versions = [
+        "1.65.0",
+    ],
+)
 
 load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository")
 
 crates_repository(
     name = "crate_index",
     annotations = {},
-    cargo_lockfile = "//third_party:Cargo.Bazel.lock",
-    lockfile = "//third_party:Cargo.lock",
+    cargo_lockfile = "//third_party/cargo:Cargo.Bazel.lock",
+    lockfile = "//third_party/cargo:Cargo.lock",
     packages = {
         "clap": crate.spec(
             version = "4.0.29",

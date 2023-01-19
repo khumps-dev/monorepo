@@ -4,7 +4,10 @@
         {
             "label": "Generate rust-project.json",
             "command": "bazel",
-            "args": ["run", "@rules_rust//tools/rust_analyzer:gen_rust_project"],
+            "args": [
+                "run",
+                "@rules_rust//tools/rust_analyzer:gen_rust_project"
+            ],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -18,5 +21,18 @@
                 "runOn": "folderOpen"
             }
         },
+        {
+            "label": "Repin rust dependencies",
+            "command": "bazel",
+            "args": [
+                "sync",
+                "--only=crate_index"
+            ],
+            "options": {
+                "env": {
+                    "CARGO_BAZEL_REPIN": "1"
+                }
+            }
+        }
     ]
 }
