@@ -44,6 +44,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt install -y ./sapling.de
 RUN wget https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
 RUN install kubectl /usr/local/bin && rm kubectl
 
+# Rust (for tooling)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
+    -y --no-modify-path --default-toolchain 1.65.0 --profile minimal --component clippy,rust-src,rustfmt
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     gh \
