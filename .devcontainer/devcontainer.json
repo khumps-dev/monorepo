@@ -17,9 +17,11 @@
 		"vscode": {
 			"extensions": [
 				"BazelBuild.vscode-bazel",
-				"rust-lang.rust-analyzer",
+				"tamasfe.even-better-toml",
+				"GitHub.vscode-pull-request-github",
 				"HashiCorp.terraform",
-				"GitHub.vscode-pull-request-github"
+				"meta.sapling-scm",
+				"rust-lang.rust-analyzer",
 			]
 		}
 		// },
