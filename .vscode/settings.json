@@ -1,5 +1,9 @@
 {
     "editor.formatOnSave": true,
     "bazel.buildifierFixOnFormat": true,
-    "git.requireGitUserConfig": false
+    "git.requireGitUserConfig": false,
+    "rust-analyzer.lens.references.adt.enable": true,
+    "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
+    "rust-analyzer.workspace.symbol.search.kind": "all_symbols",
+    "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
 }
