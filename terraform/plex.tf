@@ -1,10 +1,14 @@
 locals {
-  plex_name = "plex"
-  plex_port = 32400
+  plex_name          = "plex"
+  plex_port          = 32400
+  plex_exporter_port = 9594
 }
 resource "kubernetes_namespace" "plex" {
   metadata {
     name = local.plex_name
+    labels = {
+      monitoring = true
+    }
   }
 }
 
@@ -113,6 +117,35 @@ resource "kubernetes_deployment" "plex" {
             period_seconds        = 20
           }
         }
+        container {
+          name  = "exporter"
+          image = "granra/plex_exporter"
+          env {
+            name = "TOKEN"
+            value_from {
+              secret_key_ref {
+                name = "auth-token"
+                key  = "token"
+              }
+            }
+          }
+          args = ["--token", "$(TOKEN)", "--config-path", "/config/config.yaml"]
+
+          liveness_probe {
+            http_get {
+              path   = "health"
+              port   = local.plex_exporter_port
+              scheme = "HTTP"
+            }
+            initial_delay_seconds = 45
+            period_seconds        = 15
+          }
+          volume_mount {
+            mount_path = "/config"
+            name       = "exporter-config"
+          }
+        }
+
         volume {
           name = "plex-config"
           iscsi {
@@ -129,8 +162,35 @@ resource "kubernetes_deployment" "plex" {
             server = "192.168.2.5"
           }
         }
+        volume {
+          name = "exporter-config"
+          config_map {
+            name = kubernetes_config_map_v1.plex-exporter.metadata[0].name
+          }
+        }
+
       }
     }
+  }
+}
+
+resource "kubernetes_config_map_v1" "plex-exporter" {
+  metadata {
+    generate_name = "exporter-config"
+    namespace     = local.plex_name
+  }
+  data = {
+    "config.yaml" = yamlencode(
+      {
+        autoDiscover = false
+        # logLevel     = "debug"
+        servers = [
+          {
+            baseUrl  = "https://plex:32400"
+            insecure = true
+          }
+        ]
+    })
   }
 }
 
@@ -175,6 +235,9 @@ resource "kubernetes_service" "plex" {
   metadata {
     name      = local.plex_name
     namespace = local.plex_name
+    labels = {
+      app = "plex"
+    }
   }
   spec {
     selector = {
@@ -183,6 +246,10 @@ resource "kubernetes_service" "plex" {
     port {
       name = "http"
       port = local.plex_port
+    }
+    port {
+      name = "exporter"
+      port = local.plex_exporter_port
     }
   }
 }
