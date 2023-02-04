@@ -37,7 +37,7 @@ RUN chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list
 
 # Sapling CLI
-RUN wget https://github.com/facebook/sapling/releases/download/0.2.20221222-152408-ha6a66d09/sapling_0.2.20221222-152408-ha6a66d09_amd64.Ubuntu22.04.deb -O sapling.deb
+RUN wget https://github.com/facebook/sapling/releases/download/0.2.20230124-180750-hf8cd450a/sapling_0.2.20230124-180750-hf8cd450a_amd64.Ubuntu22.04.deb -O sapling.deb
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt install -y ./sapling.deb && rm sapling.deb
 
 # Kubectl
