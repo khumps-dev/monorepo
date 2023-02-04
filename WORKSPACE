@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 # ----- Rust -----
 http_archive(
@@ -26,7 +26,13 @@ crates_repository(
     cargo_lockfile = "//third_party/cargo:Cargo.Bazel.lock",
     lockfile = "//third_party/cargo:Cargo.lock",
     packages = {
+        "anyhow": crate.spec(
+            version = "1.0.68",
+        ),
         "clap": crate.spec(
+            features = [
+                "derive",
+            ],
             version = "4.0.29",
         ),
         "oauth2": crate.spec(
@@ -48,3 +54,10 @@ crate_repositories()
 load("@rules_rust//tools/rust_analyzer:deps.bzl", "rust_analyzer_dependencies")
 
 rust_analyzer_dependencies()
+
+# Prometheus CRDs
+http_file(
+    name = "prometheus_crds",
+    sha256 = "e049a2a2f5eb4f5d021d09e6402b3d2cf4cc27a3c720e71477afff20d2a2eb49",
+    url = "https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.62.0/bundle.yaml",
+)
