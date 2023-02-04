@@ -41,6 +41,12 @@ crates_repository(
         "reqwest": crate.spec(
             version = "0.11.13",
         ),
+        "serde": crate.spec(
+            version = "1.0.152",
+        ),
+        "serde_json": crate.spec(
+            version = "1.0.91",
+        ),
     },
 )
 
