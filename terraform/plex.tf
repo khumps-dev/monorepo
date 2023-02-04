@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "plex" {
         }
         container {
           name  = "plex"
-          image = "plexinc/pms-docker:1.29.2.6364-6d72b0cf6"
+          image = "plexinc/pms-docker:1.30.2.6563-3d4dc0cce"
           port {
             container_port = local.plex_port
           }
