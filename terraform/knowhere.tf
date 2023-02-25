@@ -470,6 +470,9 @@ resource "kubernetes_deployment" "knowhere_sonarr" {
   }
   spec {
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         app : local.sonarr-name
@@ -636,15 +639,25 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           image = "thrnz/docker-wireguard-pia"
           env {
             name  = "LOC"
-            value = "us_new_york_city"
+            value = "bahamas"
           }
           env {
-            name  = "USER"
-            value = "p5683759"
+            name = "USER"
+            value_from {
+              secret_key_ref {
+                name = "pia-credentials"
+                key  = "username"
+              }
+            }
           }
           env {
-            name  = "PASS"
-            value = "d!ro3LLdUf4J2Ke9i2eh"
+            name = "PASS"
+            value_from {
+              secret_key_ref {
+                name = "pia-credentials"
+                key  = "password"
+              }
+            }
           }
           env {
             name  = "LOCAL_NETWORK"
@@ -652,6 +665,14 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           }
           env {
             name  = "FIREWALL"
+            value = "1"
+          }
+          env {
+            name  = "PORT_FORWARDING"
+            value = "1"
+          }
+          env {
+            name  = "PORT_PERSIST"
             value = "1"
           }
         }
