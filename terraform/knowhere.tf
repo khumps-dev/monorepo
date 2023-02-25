@@ -588,7 +588,7 @@ resource "kubernetes_deployment" "knowhere_transmission" {
       spec {
         container {
           name  = local.transmission-name
-          image = "ghcr.io/linuxserver/transmission:latest"
+          image = "ghcr.io/linuxserver/transmission:3.00-r8-ls151"
           port {
             container_port = local.transmission-port
           }
