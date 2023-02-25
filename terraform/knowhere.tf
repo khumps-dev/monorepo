@@ -574,6 +574,9 @@ resource "kubernetes_deployment" "knowhere_transmission" {
   spec {
 
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         app : local.transmission-name
