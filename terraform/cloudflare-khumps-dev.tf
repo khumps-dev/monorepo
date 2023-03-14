@@ -97,3 +97,27 @@ resource "cloudflare_record" "vpn-khumps-dev" {
   type    = "CNAME"
   value   = local.domain
 }
+
+resource "cloudflare_record" "prometheus-khumps-dev" {
+  zone_id = local.khumps-dev-zone-id
+  name    = "prometheus"
+  type    = "CNAME"
+  value   = cloudflare_tunnel.singularity.cname
+  proxied = true
+}
+
+resource "cloudflare_record" "grafana-khumps-dev" {
+  zone_id = local.khumps-dev-zone-id
+  name    = "grafana"
+  type    = "CNAME"
+  value   = cloudflare_tunnel.singularity.cname
+  proxied = true
+}
+
+resource "cloudflare_record" "alertmanager-khumps-dev" {
+  zone_id = local.khumps-dev-zone-id
+  name    = "alertmanager"
+  type    = "CNAME"
+  value   = cloudflare_tunnel.singularity.cname
+  proxied = true
+}
