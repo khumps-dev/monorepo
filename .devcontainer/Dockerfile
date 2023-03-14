@@ -48,13 +48,24 @@ RUN install kubectl /usr/local/bin && rm kubectl
 RUN wget https://github.com/bazelbuild/bazel-watcher/releases/download/v0.21.4/ibazel_linux_amd64 -O ibazel
 RUN install ibazel /usr/local/bin && rm ibazel
 
+# jsonnet
+
+# jsonnet bundler
+RUN wget https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v0.5.1/jb-linux-amd64 -O jb
+RUN install jb /usr/local/bin && rm jb
+
+# gojsontoyaml
+RUN wget https://github.com/brancz/gojsontoyaml/releases/download/v0.1.0/gojsontoyaml_0.1.0_linux_amd64.tar.gz -o gojsontoyaml.tar.gz
+RUN tar xvf gojsontoyaml.tar.gz gojsontoyaml && install gojsontoyaml /usr/local/bin && rm gojsontoyaml
+
 # Rust (for tooling)
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     -y --no-modify-path --default-toolchain 1.65.0 --profile minimal --component clippy,rust-src,rustfmt
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     gh \
-    locales
+    locales \
+    jq
 
 ENV LC_ALL="en_US.UTF-8"
 ENV LC_CTYPE="en_US.UTF-8"
