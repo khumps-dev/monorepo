@@ -81,10 +81,6 @@ resource "kubernetes_deployment" "plex" {
               "gpu.intel.com/i915" = 1
             }
           }
-          env {
-            name  = "PLEX_CLAIM"
-            value = "claim-mC2-yonk2ULQ_Y819NB7"
-          }
           //		  env {
           //			name = "DEBUG"
           //			value = "true"
@@ -97,25 +93,25 @@ resource "kubernetes_deployment" "plex" {
           //			name = "CHANGE_CONFIG_DIR_OWNERSHIP"
           //			value = "true"
           //		  }
-          readiness_probe {
-            http_get {
-              path   = "identity"
-              port   = "32400"
-              scheme = "HTTPS"
-            }
-            initial_delay_seconds = 60
-            period_seconds        = 20
-          }
+          # readiness_probe {
+          #   http_get {
+          #     path   = "identity"
+          #     port   = "32400"
+          #     scheme = "HTTPS"
+          #   }
+          #   initial_delay_seconds = 60
+          #   period_seconds        = 20
+          # }
 
-          liveness_probe {
-            http_get {
-              path   = "identity"
-              port   = "32400"
-              scheme = "HTTPS"
-            }
-            initial_delay_seconds = 60
-            period_seconds        = 20
-          }
+          # liveness_probe {
+          #   http_get {
+          #     path   = "identity"
+          #     port   = "32400"
+          #     scheme = "HTTPS"
+          #   }
+          #   initial_delay_seconds = 60
+          #   period_seconds        = 20
+          # }
         }
         container {
           name  = "exporter"
@@ -131,15 +127,15 @@ resource "kubernetes_deployment" "plex" {
           }
           args = ["--token", "$(TOKEN)", "--config-path", "/config/config.yaml"]
 
-          liveness_probe {
-            http_get {
-              path   = "health"
-              port   = local.plex_exporter_port
-              scheme = "HTTP"
-            }
-            initial_delay_seconds = 45
-            period_seconds        = 15
-          }
+          # liveness_probe {
+          #   http_get {
+          #     path   = "health"
+          #     port   = local.plex_exporter_port
+          #     scheme = "HTTP"
+          #   }
+          #   initial_delay_seconds = 45
+          #   period_seconds        = 15
+          # }
           volume_mount {
             mount_path = "/config"
             name       = "exporter-config"
