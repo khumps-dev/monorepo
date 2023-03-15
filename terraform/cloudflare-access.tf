@@ -12,3 +12,7 @@ resource "cloudflare_access_group" "admin" {
     email = ["kmanh999@gmail.com"]
   }
 }
+
+# resource "cloudflare_devi" "name" {
+
+# }
