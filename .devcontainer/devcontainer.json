@@ -1,0 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "TheRepo",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"mounts": [
+		// Preserve bash history
+		"source=therepo-bashhistory,target=/commandhistory,type=volume",
+		// Preserve Github CLI storage
+		"source=therepo-dot-config,target=/root/.config,type=volume",
+		// Preserve kubectl
+		"source=therepo-kubectl,target=/root/.kube,type=volume"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"BazelBuild.vscode-bazel",
+				"tamasfe.even-better-toml",
+				"GitHub.vscode-pull-request-github",
+				"HashiCorp.terraform",
+				"meta.sapling-scm",
+				"rust-lang.rust-analyzer",
+			]
+		}
+		// },
+		// "postCreateCommand": [
+		// 	".devcontainer/postCreate.sh"
+		// ]
+		// "runArgs": [
+		// 	"--env-file",
+		// 	".devcontainer/devcontainer.env"
+		// ]
+	}
+}

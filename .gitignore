@@ -1,0 +1,5 @@
+bazel*
+rust-project.json
+.devcontainer/devcontainer.env
+terraform/.terraform
+kube-prometheus/manifests/**
