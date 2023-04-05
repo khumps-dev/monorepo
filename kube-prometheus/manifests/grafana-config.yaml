@@ -10,6 +10,18 @@ metadata:
   namespace: monitoring
 stringData:
   grafana.ini: |
+    [auth.anonymous]
+    enabled = true
+    [auth.github]
+    allow_assign_grafana_admin = true
+    allow_sign_up = true
+    allowed_organizations = khumps-dev
+    client_id = 8ac040c4da2a7255f85a
+    client_secret = a005f9e7ab57a50ab4b0d9c68bce37838e2ce5d8
+    enabled = true
+    role_attribute_path = [login==khumps] && 'GrafanaAdmin' || 'Viewer'
     [date_formats]
     default_timezone = UTC
+    [server]
+    root_url = https://grafana.khumps.dev
 type: Opaque

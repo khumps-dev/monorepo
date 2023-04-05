@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/grafana-config: 861ef2c0fc2d19a8563af172a4c7dd9d
+        checksum/grafana-config: 39f2e78556c975229d0a1fe2e4dfb9e7
         checksum/grafana-dashboardproviders: 3bf1ff4315550a6ebe26944742ab2fd4
         checksum/grafana-datasources: 7127ad0c16d0b229907cc0e836cf975e
       labels:
@@ -121,6 +121,9 @@ spec:
           readOnly: false
         - mountPath: /grafana-dashboard-definitions/0/persistentvolumesusage
           name: grafana-dashboard-persistentvolumesusage
+          readOnly: false
+        - mountPath: /grafana-dashboard-definitions/0/plex-overview
+          name: grafana-dashboard-plex-overview
           readOnly: false
         - mountPath: /grafana-dashboard-definitions/0/pod-total
           name: grafana-dashboard-pod-total
@@ -237,6 +240,9 @@ spec:
       - configMap:
           name: grafana-dashboard-workload-total
         name: grafana-dashboard-workload-total
+      - configMap:
+          name: grafana-dashboard-plex-overview
+        name: grafana-dashboard-plex-overview
       - name: grafana-config
         secret:
           secretName: grafana-config

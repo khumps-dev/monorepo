@@ -1,6 +1,7 @@
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'src/networkPolicy.jsonnet') +
+  // (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
   // Uncomment the following imports to enable its patches
   // (import 'kube-prometheus/addons/anti-affinity.libsonnet') +
   // (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
@@ -13,6 +14,34 @@ local kp =
     values+:: {
       common+: {
         namespace: 'monitoring',
+      },
+      prometheus+: {
+        namespaces+: [
+          'knowhere',
+          'plex',
+        ],
+      },
+      grafana+: {
+        config+: {  // http://docs.grafana.org/installation/configuration/
+          sections+: {
+            'auth.anonymous': { enabled: true },
+            'auth.github': {
+              enabled: true,
+              allow_sign_up: true,
+              client_id: std.extVar('GRAFANA_OAUTH_ID'),
+              client_secret: std.extVar('GRAFANA_OAUTH_SECRET'),
+              allowed_organizations: ['khumps-dev'],
+              allow_assign_grafana_admin: true,
+              role_attribute_path: "[login==khumps] && 'GrafanaAdmin' || 'Viewer'",
+            },
+            server+: {
+              root_url: 'https://grafana.khumps.dev',
+            },
+          },
+        },
+        rawDashboards+:: {
+          'plex-overview.json': (importstr 'src/dashboards/plex-overview.json'),
+        },
       },
     },
   };

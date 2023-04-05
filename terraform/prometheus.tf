@@ -2,37 +2,6 @@ locals {
   ns = "monitoring"
 }
 
-# resource "kubernetes_manifest" "plex_monitor" {
-#   manifest = {
-#     apiVersion = "monitoring.coreos.com/v1"
-#     kind       = "ServiceMonitor"
-#     metadata = {
-#       name      = "plex"
-#       namespace = "monitoring"
-#       labels = {
-#         app = "plex"
-#       }
-#     }
-#     spec = {
-#       selector = {
-#         matchLabels = {
-#           app = "plex"
-#         }
-#       }
-#       endpoints = [
-#         {
-#           port = "exporter"
-#         }
-#       ]
-#       namespaceSelector = {
-#         matchNames = [
-#           "plex"
-#         ]
-#       }
-#     }
-#   }
-# }
-
 resource "cloudflare_access_application" "prometheus" {
   account_id = cloudflare_access_organization.knowhere.account_id
   name       = "Prometheus"
