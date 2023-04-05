@@ -6,8 +6,8 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     curl \
     g++ \
-    git=1:2.34.1-1ubuntu1.5 \
-    libssl-dev=3.0.2-0ubuntu1.7 \
+    git \
+    libssl-dev \
     pkg-config \
     python3 \
     unzip \
@@ -55,8 +55,8 @@ RUN wget https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v0
 RUN install jb /usr/local/bin && rm jb
 
 # gojsontoyaml
-RUN wget https://github.com/brancz/gojsontoyaml/releases/download/v0.1.0/gojsontoyaml_0.1.0_linux_amd64.tar.gz -o gojsontoyaml.tar.gz
-RUN tar xvf gojsontoyaml.tar.gz gojsontoyaml && install gojsontoyaml /usr/local/bin && rm gojsontoyaml
+RUN wget https://github.com/brancz/gojsontoyaml/releases/download/v0.1.0/gojsontoyaml_0.1.0_linux_amd64.tar.gz -O gojsontoyaml.tar.gz
+RUN tar xzf gojsontoyaml.tar.gz gojsontoyaml && install gojsontoyaml /usr/local/bin && rm gojsontoyaml
 
 # Rust (for tooling)
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \

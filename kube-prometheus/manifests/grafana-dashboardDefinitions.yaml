@@ -37698,4 +37698,354 @@ items:
       app.kubernetes.io/version: 9.4.3
     name: grafana-dashboard-workload-total
     namespace: monitoring
+- apiVersion: v1
+  data:
+    plex-overview.json: |-
+      {
+          "annotations": {
+              "list": [
+                  {
+                      "builtIn": 1,
+                      "datasource": {
+                          "type": "grafana",
+                          "uid": "-- Grafana --"
+                      },
+                      "enable": true,
+                      "hide": true,
+                      "iconColor": "rgba(0, 211, 255, 1)",
+                      "name": "Annotations & Alerts",
+                      "target": {
+                          "limit": 100,
+                          "matchAny": false,
+                          "tags": [],
+                          "type": "dashboard"
+                      },
+                      "type": "dashboard"
+                  }
+              ]
+          },
+          "editable": true,
+          "fiscalYearStartMonth": 0,
+          "graphTooltip": 0,
+          "links": [],
+          "liveNow": false,
+          "panels": [
+              {
+                  "datasource": {
+                      "type": "prometheus",
+                      "uid": "P1809F7CD0C75ACF3"
+                  },
+                  "fieldConfig": {
+                      "defaults": {
+                          "color": {
+                              "mode": "thresholds"
+                          },
+                          "mappings": [],
+                          "thresholds": {
+                              "mode": "absolute",
+                              "steps": [
+                                  {
+                                      "color": "green",
+                                      "value": null
+                                  },
+                                  {
+                                      "color": "red",
+                                      "value": 80
+                                  }
+                              ]
+                          }
+                      },
+                      "overrides": []
+                  },
+                  "gridPos": {
+                      "h": 3,
+                      "w": 7,
+                      "x": 0,
+                      "y": 0
+                  },
+                  "id": 6,
+                  "options": {
+                      "colorMode": "value",
+                      "graphMode": "none",
+                      "justifyMode": "center",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                          "calcs": [
+                              "lastNotNull"
+                          ],
+                          "fields": "/^1\\.30\\.2\\.6563\\-3d4dc0cce$/",
+                          "values": false
+                      },
+                      "textMode": "name"
+                  },
+                  "pluginVersion": "9.4.3",
+                  "targets": [
+                      {
+                          "datasource": {
+                              "type": "prometheus",
+                              "uid": "P1809F7CD0C75ACF3"
+                          },
+                          "editorMode": "code",
+                          "exemplar": false,
+                          "expr": "plex_server_info",
+                          "instant": true,
+                          "legendFormat": "{{version}}",
+                          "range": false,
+                          "refId": "A"
+                      }
+                  ],
+                  "title": "Version",
+                  "type": "stat"
+              },
+              {
+                  "datasource": {
+                      "type": "prometheus",
+                      "uid": "P1809F7CD0C75ACF3"
+                  },
+                  "fieldConfig": {
+                      "defaults": {
+                          "color": {
+                              "fixedColor": "green",
+                              "mode": "fixed"
+                          },
+                          "mappings": [],
+                          "thresholds": {
+                              "mode": "absolute",
+                              "steps": [
+                                  {
+                                      "color": "green",
+                                      "value": null
+                                  },
+                                  {
+                                      "color": "red",
+                                      "value": 80
+                                  }
+                              ]
+                          }
+                      },
+                      "overrides": []
+                  },
+                  "gridPos": {
+                      "h": 6,
+                      "w": 6,
+                      "x": 0,
+                      "y": 3
+                  },
+                  "id": 2,
+                  "options": {
+                      "colorMode": "value",
+                      "graphMode": "none",
+                      "justifyMode": "center",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                          "calcs": [
+                              "lastNotNull"
+                          ],
+                          "fields": "",
+                          "values": false
+                      },
+                      "textMode": "auto"
+                  },
+                  "pluginVersion": "9.4.3",
+                  "targets": [
+                      {
+                          "datasource": {
+                              "type": "prometheus",
+                              "uid": "P1809F7CD0C75ACF3"
+                          },
+                          "editorMode": "builder",
+                          "expr": "plex_library_section_size_count",
+                          "legendFormat": "{{name}}",
+                          "range": true,
+                          "refId": "A"
+                      }
+                  ],
+                  "title": "Library Size",
+                  "type": "stat"
+              },
+              {
+                  "datasource": {
+                      "type": "prometheus",
+                      "uid": "P1809F7CD0C75ACF3"
+                  },
+                  "fieldConfig": {
+                      "defaults": {
+                          "color": {
+                              "mode": "thresholds"
+                          },
+                          "mappings": [],
+                          "thresholds": {
+                              "mode": "absolute",
+                              "steps": [
+                                  {
+                                      "color": "green",
+                                      "value": null
+                                  },
+                                  {
+                                      "color": "red",
+                                      "value": 80
+                                  }
+                              ]
+                          }
+                      },
+                      "overrides": []
+                  },
+                  "gridPos": {
+                      "h": 6,
+                      "w": 8,
+                      "x": 6,
+                      "y": 3
+                  },
+                  "id": 4,
+                  "options": {
+                      "colorMode": "value",
+                      "graphMode": "area",
+                      "justifyMode": "auto",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                          "calcs": [
+                              "lastNotNull"
+                          ],
+                          "fields": "",
+                          "values": false
+                      },
+                      "textMode": "auto"
+                  },
+                  "pluginVersion": "9.4.3",
+                  "targets": [
+                      {
+                          "datasource": {
+                              "type": "prometheus",
+                              "uid": "P1809F7CD0C75ACF3"
+                          },
+                          "editorMode": "builder",
+                          "expr": "plex_sessions_active_count",
+                          "legendFormat": "__auto",
+                          "range": true,
+                          "refId": "A"
+                      }
+                  ],
+                  "title": "Active Streams",
+                  "type": "stat"
+              },
+              {
+                  "datasource": {
+                      "type": "prometheus",
+                      "uid": "P1809F7CD0C75ACF3"
+                  },
+                  "fieldConfig": {
+                      "defaults": {
+                          "color": {
+                              "mode": "palette-classic"
+                          },
+                          "custom": {
+                              "axisCenteredZero": false,
+                              "axisColorMode": "text",
+                              "axisLabel": "",
+                              "axisPlacement": "auto",
+                              "barAlignment": 0,
+                              "drawStyle": "line",
+                              "fillOpacity": 0,
+                              "gradientMode": "none",
+                              "hideFrom": {
+                                  "legend": false,
+                                  "tooltip": false,
+                                  "viz": false
+                              },
+                              "lineInterpolation": "linear",
+                              "lineWidth": 1,
+                              "pointSize": 5,
+                              "scaleDistribution": {
+                                  "type": "linear"
+                              },
+                              "showPoints": "auto",
+                              "spanNulls": false,
+                              "stacking": {
+                                  "group": "A",
+                                  "mode": "none"
+                              },
+                              "thresholdsStyle": {
+                                  "mode": "off"
+                              }
+                          },
+                          "mappings": [],
+                          "thresholds": {
+                              "mode": "absolute",
+                              "steps": [
+                                  {
+                                      "color": "green",
+                                      "value": null
+                                  },
+                                  {
+                                      "color": "red",
+                                      "value": 80
+                                  }
+                              ]
+                          }
+                      },
+                      "overrides": []
+                  },
+                  "gridPos": {
+                      "h": 8,
+                      "w": 14,
+                      "x": 0,
+                      "y": 9
+                  },
+                  "id": 8,
+                  "options": {
+                      "legend": {
+                          "calcs": [],
+                          "displayMode": "list",
+                          "placement": "bottom",
+                          "showLegend": true
+                      },
+                      "tooltip": {
+                          "mode": "single",
+                          "sort": "none"
+                      }
+                  },
+                  "targets": [
+                      {
+                          "datasource": {
+                              "type": "prometheus",
+                              "uid": "P1809F7CD0C75ACF3"
+                          },
+                          "editorMode": "builder",
+                          "expr": "container_threads{namespace=\"plex\", container=\"plex\"}",
+                          "legendFormat": "__auto",
+                          "range": true,
+                          "refId": "A"
+                      }
+                  ],
+                  "title": "Container threads",
+                  "type": "timeseries"
+              }
+          ],
+          "refresh": "",
+          "revision": 1,
+          "schemaVersion": 38,
+          "style": "dark",
+          "tags": [],
+          "templating": {
+              "list": []
+          },
+          "time": {
+              "from": "now-6h",
+              "to": "now"
+          },
+          "timepicker": {},
+          "timezone": "",
+          "title": "Plex Overview",
+          "version": 0,
+          "weekStart": ""
+      }
+  kind: ConfigMap
+  metadata:
+    labels:
+      app.kubernetes.io/component: grafana
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/part-of: kube-prometheus
+      app.kubernetes.io/version: 9.4.3
+    name: grafana-dashboard-plex-overview
+    namespace: monitoring
 kind: ConfigMapList
