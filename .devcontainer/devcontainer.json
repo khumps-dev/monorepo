@@ -21,6 +21,7 @@
 				"GitHub.vscode-pull-request-github",
 				"HashiCorp.terraform",
 				"rust-lang.rust-analyzer",
+				"Grafana.vscode-jsonnet"
 			]
 		}
 		// },

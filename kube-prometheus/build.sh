@@ -4,6 +4,7 @@
 
 set -e
 set -x
+set -u
 # only exit with zero if all commands of the pipeline exit successfully
 set -o pipefail
 
