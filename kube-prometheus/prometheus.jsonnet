@@ -39,8 +39,10 @@ local kp =
             },
           },
         },
-        rawDashboards+:: {
-          'plex-overview.json': (importstr 'src/dashboards/plex-overview.json'),
+        folderDashboards+:: {
+          Plex: {
+            'plex-overview.json': (import 'src/dashboards/plex-overview.json'),
+          },
         },
       },
     },
