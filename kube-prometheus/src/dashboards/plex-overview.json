@@ -309,7 +309,7 @@
                     },
                     "editorMode": "builder",
                     "expr": "container_threads{namespace=\"plex\", container=\"plex\"}",
-                    "legendFormat": "__auto",
+                    "legendFormat": "{{pod}}",
                     "range": true,
                     "refId": "A"
                 }

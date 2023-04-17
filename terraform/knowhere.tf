@@ -145,7 +145,7 @@ resource "kubernetes_deployment" "knowhere_flaresolverr" {
     replicas = 1
     selector {
       match_labels = {
-        app : local.flaresolverr-name
+        app = local.flaresolverr-name
       }
     }
     template {
