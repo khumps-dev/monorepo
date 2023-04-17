@@ -17,6 +17,7 @@ local kp =
       },
       prometheus+: {
         namespaces+: [
+          'exporters',
           'knowhere',
           'plex',
         ],
@@ -43,6 +44,12 @@ local kp =
           Plex: {
             'plex-overview.json': (import 'src/dashboards/plex-overview.json'),
           },
+          Networking: {
+            'mikrotik-overview.json': (import 'src/dashboards/mikrotik/mikrotik-overview.json'),
+          },
+        },
+      },
+    },
         },
       },
     },
