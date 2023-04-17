@@ -51,6 +51,21 @@ local kp =
         },
       },
     },
+    prometheus+: {
+      prometheus+: {
+        spec+: {
+          retention: '90d',
+          storage: {
+            volumeClaimTemplate: {
+              apiVersion: 'v1',
+              kind: 'PersistentVolumeClaim',
+              spec: {
+                accessModes: ['ReadWriteOnce'],
+                resources: { requests: { storage: '100Gi' } },
+                storageClassName: 'longhorn',
+              },
+            },
+          },
         },
       },
     },
