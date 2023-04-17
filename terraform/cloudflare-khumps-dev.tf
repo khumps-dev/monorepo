@@ -121,3 +121,11 @@ resource "cloudflare_record" "alertmanager-khumps-dev" {
   value   = cloudflare_tunnel.singularity.cname
   proxied = true
 }
+
+resource "cloudflare_record" "longhorn-khumps-dev" {
+  zone_id = local.khumps-dev-zone-id
+  name    = "longhorn"
+  type    = "CNAME"
+  value   = cloudflare_tunnel.singularity.cname
+  proxied = true
+}

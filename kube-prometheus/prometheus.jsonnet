@@ -19,6 +19,7 @@ local kp =
         namespaces+: [
           'exporters',
           'knowhere',
+          'longhorn-system',
           'plex',
         ],
       },

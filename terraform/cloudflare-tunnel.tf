@@ -68,6 +68,10 @@ resource "cloudflare_tunnel_config" "singularity" {
       service  = "http://alertmanager-main.monitoring:9093"
     }
     ingress_rule {
+      hostname = cloudflare_record.longhorn-khumps-dev.hostname
+      service  = "http://longhorn-frontend.longhorn-system:80"
+    }
+    ingress_rule {
       service = "http_status:404"
     }
   }
