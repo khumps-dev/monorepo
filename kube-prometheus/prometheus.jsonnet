@@ -49,8 +49,8 @@ local kp =
       },
       blackboxExporter+:: {
         resources+: {
-          requests+: { cpu: '30m' },
-          limits+: { cpu: '60m' },
+          requests+: { cpu: '75m' },
+          limits+: { cpu: '200m' },
         },
       },
       nodeExporter+:: {
@@ -61,6 +61,12 @@ local kp =
       },
       kubeStateMetrics+:: {
         kubeRbacProxyMain+:: {
+          resources+: {
+            limits+: { cpu: '160m' },
+            requests+: { cpu: '80m' },
+          },
+        },
+        kubeRbacProxySelf+:: {
           resources+: {
             limits+: { cpu: '160m' },
             requests+: { cpu: '80m' },
