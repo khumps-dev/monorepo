@@ -17,9 +17,10 @@ mkdir -p manifests/setup
 
 # Calling gojsontoyaml is optional, but we would like to generate yaml, not json
 jsonnet \
+--ext-str "ALERTMANAGER_SLACK_URL=$ALERTMANAGER_SLACK_URL" \
 --ext-str "GRAFANA_OAUTH_ID=$GRAFANA_OAUTH_ID" \
 --ext-str "GRAFANA_OAUTH_SECRET=$GRAFANA_OAUTH_SECRET" \
--J vendor -m manifests "${1-example.jsonnet}" | xargs -I{} sh -c 'cat {} | gojsontoyaml > {}.yaml' -- {}
+-J vendor -m manifests "${1-prometheus.jsonnet}" | xargs -I{} sh -c 'cat {} | gojsontoyaml > {}.yaml' -- {}
 
 # Make sure to remove json files
 find manifests -type f ! -name '*.yaml' -delete

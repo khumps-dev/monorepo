@@ -1,6 +1,7 @@
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'src/networkPolicy.jsonnet') +
+  (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
   // (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
   // Uncomment the following imports to enable its patches
   // (import 'kube-prometheus/addons/anti-affinity.libsonnet') +
@@ -22,6 +23,49 @@ local kp =
           'longhorn-system',
           'plex',
         ],
+      },
+      alertmanager+: {
+        config+: {
+          global+: {
+            slack_api_url: std.extVar('ALERTMANAGER_SLACK_URL'),
+          },
+          receivers+: [
+            {
+              name: 'Slack',
+              slack_configs: [
+                {
+                  send_resolved: true,
+                  username: 'Singularity Bot',
+                },
+              ],
+            },
+          ],
+          route+: {
+            routes+: [
+              { receiver: 'Slack' },
+            ],
+          },
+        },
+      },
+      blackboxExporter+:: {
+        resources+: {
+          requests+: { cpu: '30m' },
+          limits+: { cpu: '60m' },
+        },
+      },
+      nodeExporter+:: {
+        resources+: {
+          requests+: { cpu: '400m' },
+          limits+: { cpu: '750m' },
+        },
+      },
+      kubeStateMetrics+:: {
+        kubeRbacProxyMain+:: {
+          resources+: {
+            limits+: { cpu: '160m' },
+            requests+: { cpu: '80m' },
+          },
+        },
       },
       grafana+: {
         config+: {  // http://docs.grafana.org/installation/configuration/
