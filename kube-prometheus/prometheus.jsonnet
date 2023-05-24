@@ -41,6 +41,17 @@ local kp =
             },
           },
         },
+        datasources+: [
+          {
+            name: 'Alertmanager',
+            type: 'alertmanager',
+            jsonData: {
+              implementation: 'prometheus',
+            },
+            access: 'proxy',
+            url: 'http://alertmanager-operated.monitoring:9093',
+          },
+        ],
         folderDashboards+:: {
           Plex: {
             'plex-overview.json': (import 'src/dashboards/plex-overview.json'),
@@ -48,6 +59,13 @@ local kp =
           Networking: {
             'mikrotik-overview.json': (import 'src/dashboards/mikrotik/mikrotik-overview.json'),
           },
+        },
+      },
+    },
+    alertmanager+: {
+      alertmanager+: {
+        spec+: {
+          externalUrl: 'https://alertmanager.khumps.dev',
         },
       },
     },
@@ -66,6 +84,7 @@ local kp =
               },
             },
           },
+          externalUrl: 'https://prometheus.khumps.dev',
         },
       },
     },
