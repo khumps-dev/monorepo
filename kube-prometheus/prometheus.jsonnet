@@ -1,6 +1,7 @@
 local kp =
   (import 'kube-prometheus/main.libsonnet') +
   (import 'src/networkPolicy.jsonnet') +
+  (import 'src/resource-increases.jsonnet') +
   (import 'kube-prometheus/addons/managed-cluster.libsonnet') +
   // (import 'kube-prometheus/addons/all-namespaces.libsonnet') +
   // Uncomment the following imports to enable its patches
@@ -47,33 +48,7 @@ local kp =
           },
         },
       },
-      blackboxExporter+:: {
-        resources+: {
-          requests+: { cpu: '75m' },
-          limits+: { cpu: '200m' },
-        },
-      },
-      nodeExporter+:: {
-        resources+: {
-          requests+: { cpu: '400m' },
-          limits+: { cpu: '750m' },
-        },
-      },
-      kubeStateMetrics+:: {
-        kubeRbacProxyMain+:: {
-          resources+: {
-            limits+: { cpu: '160m' },
-            requests+: { cpu: '80m' },
-          },
-        },
-        kubeRbacProxySelf+:: {
-          resources+: {
-            limits+: { cpu: '160m' },
-            requests+: { cpu: '80m' },
-          },
-        },
-      },
-      grafana+: {
+      grafana+:: {
         config+: {  // http://docs.grafana.org/installation/configuration/
           sections+: {
             'auth.anonymous': { enabled: true },
