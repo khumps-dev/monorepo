@@ -7,8 +7,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     curl \
     g++ \
     git \
+    iputils-ping \
     jsonnet \
     libssl-dev \
+    netcat \
     pkg-config \
     python3 \
     unzip \
