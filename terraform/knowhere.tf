@@ -624,7 +624,7 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           volume_mount {
             mount_path = "/downloads"
             name       = "plex"
-            sub_path   = "OpenFlixr/downloads"
+            sub_path   = "Torrents"
           }
         }
         container {
