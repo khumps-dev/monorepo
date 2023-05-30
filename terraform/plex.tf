@@ -76,6 +76,11 @@ resource "kubernetes_deployment" "plex" {
             name       = "plex"
             sub_path   = "Movies"
           }
+          volume_mount {
+            mount_path = "/backups"
+            name       = "plex"
+            sub_path   = "Backups"
+          }
           resources {
             limits = {
               "gpu.intel.com/i915" = 1
