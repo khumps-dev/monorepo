@@ -39,42 +39,6 @@ resource "kubernetes_deployment_v1" "mikrotik_exporter" {
           port {
             container_port = 9436
           }
-          env {
-            name = "ADDRESS"
-            value_from {
-              secret_key_ref {
-                name = "mikrotik"
-                key  = "address"
-              }
-            }
-          }
-          env {
-            name = "DEVICE"
-            value_from {
-              secret_key_ref {
-                name = "mikrotik"
-                key  = "device"
-              }
-            }
-          }
-          env {
-            name = "PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = "mikrotik"
-                key  = "password"
-              }
-            }
-          }
-          env {
-            name = "USERNAME"
-            value_from {
-              secret_key_ref {
-                name = "mikrotik"
-                key  = "username"
-              }
-            }
-          }
           volume_mount {
             mount_path = "/config"
             name       = "exporter-config"
