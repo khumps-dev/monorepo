@@ -385,7 +385,7 @@ resource "kubernetes_deployment" "knowhere_radarr" {
           volume_mount {
             mount_path = "/downloads"
             name       = "plex"
-            sub_path   = "OpenFlixr/downloads"
+            sub_path   = "Torrents"
           }
           volume_mount {
             mount_path = "/movies"
@@ -516,7 +516,7 @@ resource "kubernetes_deployment" "knowhere_sonarr" {
           volume_mount {
             mount_path = "/downloads"
             name       = "plex"
-            sub_path   = "OpenFlixr/downloads"
+            sub_path   = "Torrents"
           }
           liveness_probe {
             http_get {
