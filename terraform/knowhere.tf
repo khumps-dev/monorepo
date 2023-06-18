@@ -636,10 +636,10 @@ resource "kubernetes_deployment" "knowhere_transmission" {
               "NET_ADMIN"]
             }
           }
-          image = "thrnz/docker-wireguard-pia"
+          image = "thrnz/docker-wireguard-pia:latest"
           env {
             name  = "LOC"
-            value = "bahamas"
+            value = "bahamas,swiss"
           }
           env {
             name = "USER"
@@ -661,18 +661,10 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           }
           env {
             name  = "LOCAL_NETWORK"
-            value = "192.168.2.0/24 10.1.0.0/16"
+            value = "192.168.60.0/24,192.168.10.0/24,10.1.0.0/16"
           }
           env {
             name  = "FIREWALL"
-            value = "1"
-          }
-          env {
-            name  = "PORT_FORWARDING"
-            value = "1"
-          }
-          env {
-            name  = "PORT_PERSIST"
             value = "1"
           }
         }
