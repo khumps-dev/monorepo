@@ -72,13 +72,13 @@ resource "kubernetes_config_map_v1" "mikrotik-exporter" {
       devices = [
         {
           name     = "r01.khumps.dev"
-          address  = "192.168.2.1"
+          address  = "192.168.60.1"
           user     = "prometheus"
           password = var.mikrotik_password
         },
         {
           name     = "sw01.khumps.dev"
-          address  = "192.168.2.2"
+          address  = "192.168.60.2"
           user     = "prometheus"
           password = var.mikrotik_password
         }
