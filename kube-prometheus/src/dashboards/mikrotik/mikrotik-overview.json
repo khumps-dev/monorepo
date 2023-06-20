@@ -71,7 +71,7 @@
                 },
                 "textMode": "name"
             },
-            "pluginVersion": "9.4.3",
+            "pluginVersion": "9.5.2",
             "targets": [
                 {
                     "datasource": {
@@ -80,7 +80,7 @@
                     },
                     "editorMode": "builder",
                     "exemplar": false,
-                    "expr": "mikrotik_system_uptime",
+                    "expr": "mikrotik_system_uptime{name=\"$device\"}",
                     "instant": true,
                     "legendFormat": "{{version}}",
                     "range": false,
@@ -135,7 +135,7 @@
                 },
                 "textMode": "value"
             },
-            "pluginVersion": "9.4.3",
+            "pluginVersion": "9.5.2",
             "targets": [
                 {
                     "datasource": {
@@ -143,7 +143,7 @@
                         "uid": "P1809F7CD0C75ACF3"
                     },
                     "editorMode": "builder",
-                    "expr": "mikrotik_system_uptime",
+                    "expr": "mikrotik_system_uptime{name=\"$device\"}",
                     "hide": false,
                     "legendFormat": "__auto",
                     "range": true,
@@ -237,7 +237,7 @@
                         "uid": "P1809F7CD0C75ACF3"
                     },
                     "editorMode": "builder",
-                    "expr": "rate(mikrotik_interface_tx_error[$__rate_interval])",
+                    "expr": "rate(mikrotik_interface_tx_error{name=\"$device\"}[$__rate_interval])",
                     "format": "time_series",
                     "hide": false,
                     "legendFormat": "{{interface}}",
@@ -346,8 +346,8 @@
                         "uid": "P1809F7CD0C75ACF3"
                     },
                     "editorMode": "builder",
-                    "expr": "mikrotik_system_free_hdd_space",
-                    "legendFormat": "{{name}} free",
+                    "expr": "mikrotik_system_free_hdd_space{name=\"$device\"}",
+                    "legendFormat": "free",
                     "range": true,
                     "refId": "Free"
                 },
@@ -357,9 +357,9 @@
                         "uid": "P1809F7CD0C75ACF3"
                     },
                     "editorMode": "builder",
-                    "expr": "mikrotik_system_total_hdd_space",
+                    "expr": "mikrotik_system_total_hdd_space{name=\"$device\"}",
                     "hide": false,
-                    "legendFormat": "{{name}} total",
+                    "legendFormat": "total",
                     "range": true,
                     "refId": "Total"
                 }
@@ -451,7 +451,7 @@
                         "uid": "P1809F7CD0C75ACF3"
                     },
                     "editorMode": "builder",
-                    "expr": "rate(mikrotik_interface_tx_byte[$__rate_interval])",
+                    "expr": "rate(mikrotik_interface_tx_byte{name=\"$device\"}[$__rate_interval])",
                     "format": "time_series",
                     "hide": false,
                     "legendFormat": "{{interface}}",
@@ -464,7 +464,7 @@
                         "uid": "P1809F7CD0C75ACF3"
                     },
                     "editorMode": "builder",
-                    "expr": "rate(mikrotik_interface_rx_byte[$__rate_interval]) * -1",
+                    "expr": "rate(mikrotik_interface_rx_byte{name=\"$device\"}[$__rate_interval]) * -1",
                     "interval": "",
                     "legendFormat": "{{interface}}",
                     "range": true,
@@ -482,15 +482,43 @@
     "style": "dark",
     "tags": [],
     "templating": {
-        "list": []
+        "list": [
+            {
+                "current": {
+                    "selected": true,
+                    "text": "sw01.khumps.dev",
+                    "value": "sw01.khumps.dev"
+                },
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "P1809F7CD0C75ACF3"
+                },
+                "definition": "label_values(mikrotik_system_uptime,name)",
+                "hide": 0,
+                "includeAll": false,
+                "multi": false,
+                "name": "device",
+                "options": [],
+                "query": {
+                    "query": "label_values(mikrotik_system_uptime,name)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                },
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            }
+        ]
     },
     "time": {
-        "from": "now-6h",
+        "from": "now-1h",
         "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Overview",
-    "version": 0,
+    "uid": "e3e37b6d-89ed-4f47-bc2a-476c1f22e9bf",
+    "version": 1,
     "weekStart": ""
 }
