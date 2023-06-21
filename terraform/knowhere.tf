@@ -681,7 +681,7 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           name = "plex"
           nfs {
             path   = "/mnt/Main/kevin/Plex"
-            server = local.iscsi_target
+            server = local.nfs_host
           }
         }
       }
