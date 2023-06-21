@@ -8,11 +8,11 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
+      version = ">= 4.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.11.0"
+      version = ">= 2.11.0"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"

@@ -67,6 +67,9 @@ resource "kubernetes_config_map_v1" "mikrotik-exporter" {
     namespace     = "exporters"
   }
 
+  # Any change should force a redeploy of the pods
+  immutable = true
+
   data = {
     "config.yaml" = yamlencode({
       devices = [
