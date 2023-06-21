@@ -237,7 +237,7 @@ resource "kubernetes_deployment" "knowhere_jackett" {
           name = "jackett-config"
           iscsi {
             iqn           = "iqn.2021-06.freenas.fishnet:jackett"
-            target_portal = "192.168.2.5:3260"
+            target_portal = local.iscsi_target
             lun           = 3
             fs_type       = "ext4"
           }
@@ -310,7 +310,7 @@ resource "kubernetes_deployment" "knowhere_plexpy" {
           name = "plexpy-config"
           iscsi {
             iqn           = "iqn.2021-06.freenas.fishnet:plexpy"
-            target_portal = "192.168.2.5:3260"
+            target_portal = local.iscsi_target
             lun           = 2
             fs_type       = "ext4"
           }
@@ -426,7 +426,7 @@ resource "kubernetes_deployment" "knowhere_radarr" {
           name = "radarr-config"
           iscsi {
             iqn           = "iqn.2021-06.freenas.fishnet:radarr"
-            target_portal = "192.168.2.5:3260"
+            target_portal = local.iscsi_target
             lun           = 1
             fs_type       = "ext4"
           }
@@ -435,7 +435,7 @@ resource "kubernetes_deployment" "knowhere_radarr" {
           name = "plex"
           nfs {
             path   = "/mnt/Main/kevin/Plex"
-            server = "192.168.2.5"
+            server = local.nfs_host
           }
         }
       }
@@ -532,7 +532,7 @@ resource "kubernetes_deployment" "knowhere_sonarr" {
           name = "sonarr-config"
           iscsi {
             iqn           = "iqn.2021-06.freenas.fishnet:sonarr"
-            target_portal = "192.168.2.5:3260"
+            target_portal = local.iscsi_target
             lun           = 0
             fs_type       = "ext4"
           }
@@ -541,7 +541,7 @@ resource "kubernetes_deployment" "knowhere_sonarr" {
           name = "plex"
           nfs {
             path   = "/mnt/Main/kevin/Plex"
-            server = "192.168.2.5"
+            server = local.nfs_host
           }
         }
       }
@@ -672,7 +672,7 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           name = "transmission-config"
           iscsi {
             iqn           = "iqn.2021-06.freenas.fishnet:transmission"
-            target_portal = "192.168.2.5:3260"
+            target_portal = local.iscsi_target
             lun           = 4
             fs_type       = "ext4"
           }
@@ -681,7 +681,7 @@ resource "kubernetes_deployment" "knowhere_transmission" {
           name = "plex"
           nfs {
             path   = "/mnt/Main/kevin/Plex"
-            server = "192.168.2.5"
+            server = local.iscsi_target
           }
         }
       }

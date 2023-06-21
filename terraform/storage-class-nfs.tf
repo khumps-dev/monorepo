@@ -1,5 +1,7 @@
 locals {
   storage_class_name = "nfs-freenas"
+  nfs_host           = "192.168.60.5"
+  iscsi_target       = "192.168.60.5:3260"
 }
 resource "helm_release" "nfs-provisioner" {
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
@@ -7,7 +9,7 @@ resource "helm_release" "nfs-provisioner" {
   name       = "nfs-provisioner"
   set {
     name  = "nfs.server"
-    value = "192.168.2.5"
+    value = local.nfs_host
   }
   set {
     name  = "nfs.path"

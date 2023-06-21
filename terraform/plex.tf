@@ -151,7 +151,7 @@ resource "kubernetes_deployment" "plex" {
           name = "plex-config"
           iscsi {
             iqn           = "iqn.2021-06.freenas.fishnet:plex"
-            target_portal = "192.168.2.5:3260"
+            target_portal = local.iscsi_target
             lun           = 5
             fs_type       = "ext4"
           }
@@ -160,7 +160,7 @@ resource "kubernetes_deployment" "plex" {
           name = "plex"
           nfs {
             path   = "/mnt/Main/kevin/Plex"
-            server = "192.168.2.5"
+            server = local.nfs_host
           }
         }
         volume {

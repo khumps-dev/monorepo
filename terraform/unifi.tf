@@ -49,7 +49,7 @@ resource "kubernetes_deployment" "unifi" {
           name = "config"
           nfs {
             path   = "/mnt/Main/kevin/unifi-controller"
-            server = "192.168.2.5"
+            server = local.nfs_host
           }
         }
       }
