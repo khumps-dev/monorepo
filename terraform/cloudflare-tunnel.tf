@@ -72,6 +72,10 @@ resource "cloudflare_tunnel_config" "singularity" {
       service  = "http://longhorn-frontend.longhorn-system:80"
     }
     ingress_rule {
+      hostname = cloudflare_record.oncall-dev-khumps-dev.hostname
+      service  = "http://oncall-dev-engine.grafana-oncall:8080"
+    }
+    ingress_rule {
       service = "http_status:404"
     }
   }
