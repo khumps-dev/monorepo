@@ -19,8 +19,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     zlib1g-dev
 
 # Bazel
-RUN wget https://github.com/bazelbuild/bazel/releases/download/6.0.0/bazel-6.0.0-linux-x86_64 -O bazel
-RUN install bazel /usr/local/bin && rm bazel
+RUN wget https://github.com/bazelbuild/bazel/releases/download/6.2.1/bazel-6.2.1-installer-linux-x86_64.sh -O bazel-installer.sh
+RUN chmod +x ./bazel-installer.sh && ./bazel-installer.sh
+RUN echo "source /usr/local/lib/bazel/bin/bazel-complete.bash" >> ~/.bashrc
 
 # Buildifier
 RUN wget https://github.com/bazelbuild/buildtools/releases/download/5.1.0/buildifier-linux-amd64 -O buildifier
@@ -62,6 +63,10 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
 # Helm
 RUN wget https://get.helm.sh/helm-v3.11.2-linux-amd64.tar.gz -O helm.tar.gz
 RUN tar xzf helm.tar.gz --strip-components 1 linux-amd64/helm && install helm /usr/local/bin && rm helm
+
+# Skaffold
+RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+RUN install skaffold /usr/local/bin/
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     gh \
