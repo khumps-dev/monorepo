@@ -2,6 +2,7 @@ locals {
   plex_name          = "plex"
   plex_port          = 32400
   plex_exporter_port = 9594
+  plex_version       = "1.32.5.7349-8f4248874"
 }
 resource "kubernetes_namespace" "plex" {
   metadata {
@@ -53,7 +54,7 @@ resource "kubernetes_deployment" "plex" {
         }
         container {
           name  = "plex"
-          image = "plexinc/pms-docker:1.32.4.7195-7c8f9d3b6"
+          image = "plexinc/pms-docker:${local.plex_version}"
           port {
             container_port = local.plex_port
           }
