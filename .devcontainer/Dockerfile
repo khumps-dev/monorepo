@@ -59,6 +59,7 @@ RUN tar xzf gojsontoyaml.tar.gz gojsontoyaml && install gojsontoyaml /usr/local/
 # Rust (for tooling)
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     -y --no-modify-path --default-toolchain 1.65.0 --profile minimal --component clippy,rust-src,rustfmt
+RUN echo "source $HOME/.cargo/env" >> /root/.bashrc
 
 # Helm
 RUN wget https://get.helm.sh/helm-v3.11.2-linux-amd64.tar.gz -O helm.tar.gz
