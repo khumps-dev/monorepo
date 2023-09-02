@@ -9,10 +9,10 @@ global:
       enabled: false
       # Tolerate Linux node taint
       tolerations:
-      - key: "cattle.io/os"
-        value: "linux"
-        effect: "NoSchedule"
-        operator: "Equal"
+        - key: "cattle.io/os"
+          value: "linux"
+          effect: "NoSchedule"
+          operator: "Equal"
       # Select Linux nodes
       nodeSelector:
         kubernetes.io/os: "linux"
@@ -20,50 +20,6 @@ global:
       defaultSetting:
         taintToleration: cattle.io/os=linux:NoSchedule
         systemManagedComponentsNodeSelector: kubernetes.io/os:linux
-
-image:
-  longhorn:
-    engine:
-      repository: longhornio/longhorn-engine
-      tag: v1.4.0
-    manager:
-      repository: longhornio/longhorn-manager
-      tag: v1.4.0
-    ui:
-      repository: longhornio/longhorn-ui
-      tag: v1.4.0
-    instanceManager:
-      repository: longhornio/longhorn-instance-manager
-      tag: v1.4.0
-    shareManager:
-      repository: longhornio/longhorn-share-manager
-      tag: v1.4.0
-    backingImageManager:
-      repository: longhornio/backing-image-manager
-      tag: v1.4.0
-    supportBundleKit:
-      repository: longhornio/support-bundle-kit
-      tag: v0.0.17
-  csi:
-    attacher:
-      repository: longhornio/csi-attacher
-      tag: v3.4.0
-    provisioner:
-      repository: longhornio/csi-provisioner
-      tag: v2.1.2
-    nodeDriverRegistrar:
-      repository: longhornio/csi-node-driver-registrar
-      tag: v2.5.0
-    resizer:
-      repository: longhornio/csi-resizer
-      tag: v1.3.0
-    snapshotter:
-      repository: longhornio/csi-snapshotter
-      tag: v5.0.1
-    livenessProbe:
-      repository: longhornio/livenessprobe
-      tag: v2.8.0
-  pullPolicy: IfNotPresent
 
 service:
   ui:
