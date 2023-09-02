@@ -13,22 +13,22 @@
       },
       kubeRbacProxy+:: {
         resources+: {
-          requests+: { cpu: '20m' },
-          limits+: { cpu: '40m' },
+          requests+: { cpu: '40m' },
+          limits+: { cpu: '80m' },
         },
       },
     },
     kubeStateMetrics+:: {
       kubeRbacProxyMain+:: {
         resources+: {
-          limits+: { cpu: '160m' },
-          requests+: { cpu: '80m' },
+          limits+: { cpu: '320m' },
+          requests+: { cpu: '160m' },
         },
       },
       kubeRbacProxySelf+:: {
         resources+: {
-          limits+: { cpu: '160m' },
-          requests+: { cpu: '80m' },
+          limits+: { cpu: '320m' },
+          requests+: { cpu: '160m' },
         },
       },
     },
