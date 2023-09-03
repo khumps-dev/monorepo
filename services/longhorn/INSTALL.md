@@ -9,4 +9,4 @@ helm repo add longhorn https://charts.longhorn.io
 helm repo update
 ```
 
-`helm upgrade --install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.4.3 --values values.yaml` pointing at the singularity kubernetes context
+`helm upgrade --install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.5.1 --values values.yaml` pointing at the singularity kubernetes context
