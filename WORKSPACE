@@ -14,7 +14,7 @@ rules_rust_dependencies()
 rust_register_toolchains(
     # Versions must match rustup install in //.devcontainer/Dockerfile
     versions = [
-        "1.65.0",
+        "1.72.0",
     ],
 )
 
@@ -29,6 +29,7 @@ crates_repository(
         "anyhow": crate.spec(
             version = "1.0.68",
         ),
+        
         "clap": crate.spec(
             features = [
                 "derive",
