@@ -19,7 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     zlib1g-dev
 
 # Bazel
-RUN wget https://github.com/bazelbuild/bazel/releases/download/6.2.1/bazel-6.2.1-installer-linux-x86_64.sh -O bazel-installer.sh
+RUN wget https://github.com/bazelbuild/bazel/releases/download/6.3.2/bazel-6.3.2-installer-linux-x86_64.sh -O bazel-installer.sh
 RUN chmod +x ./bazel-installer.sh && ./bazel-installer.sh
 RUN echo "source /usr/local/lib/bazel/bin/bazel-complete.bash" >> ~/.bashrc
 
