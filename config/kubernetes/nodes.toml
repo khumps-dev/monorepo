@@ -1,0 +1,12 @@
+[[singularity_node]]
+name = "singularity001"
+ip_address = "192.168.60.11"
+[[singularity_node]]
+name = "singularity002"
+ip_address = "192.168.60.12"
+[[singularity_node]]
+name = "singularity003"
+ip_address = "192.168.60.13"
+[[singularity_node]]
+name = "singularity004"
+ip_address = "192.168.60.14"

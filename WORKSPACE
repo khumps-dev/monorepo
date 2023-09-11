@@ -36,15 +36,34 @@ crates_repository(
             ],
             version = "4.0.29",
         ),
+        "futures": crate.spec(
+            version = "0.3.28",
+        ),
         "oauth2": crate.spec(
             version = "4.3.0",
         ),
         "reqwest": crate.spec(
             version = "0.11.13",
         ),
+        "serde": crate.spec(
+            features = ["derive"],
+            version = "1.0.166",
+        ),
+        "serde_derive": crate.spec(
+            version = "1.0.166",
+        ),
+        "serde_json": crate.spec(
+            version = "1.0.104",
+        ),
         "tokio": crate.spec(
             features = ["full"],
             version = "1.29.1",
+        ),
+        "toml": crate.spec(
+            version = "0.7.8",
+        ),
+        "lazy_static": crate.spec(
+            version = "1.4.0",
         ),
     },
 )
