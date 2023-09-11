@@ -45,7 +45,7 @@ RUN wget https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
 RUN install kubectl /usr/local/bin && rm kubectl
 
 # ibazel
-RUN wget https://github.com/bazelbuild/bazel-watcher/releases/download/v0.21.4/ibazel_linux_amd64 -O ibazel
+RUN wget https://github.com/bazelbuild/bazel-watcher/releases/download/v0.23.7/ibazel_linux_amd64 -O ibazel
 RUN install ibazel /usr/local/bin && rm ibazel
 
 # jsonnet bundler
