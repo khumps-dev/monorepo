@@ -15,7 +15,7 @@
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never",
-                "panel": "dedicated",
+                "panel": "dedicated"
             },
             "runOptions": {
                 "runOn": "folderOpen"
@@ -33,6 +33,17 @@
                     "CARGO_BAZEL_REPIN": "1"
                 }
             }
+        },
+        {
+            "label": "Watch Build All",
+            "command": "ibazel",
+            "args": [
+                "-run_command_before",
+                "clear",
+                "build",
+                "//..."
+            ],
+            "problemMatcher": []
         }
     ]
 }
