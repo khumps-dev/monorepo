@@ -14,8 +14,8 @@
 		"source=therepo-kubectl,target=/root/.kube,type=volume",
 		// Preserve cargo
 		"source=the-repo-cargo,target=/root/.cargo,type=volume",
-		// Preserve git config
-		"source=the-repo-git,target=/root/.git,type=volume"
+		// Preserve cache directories
+		"source=the-repo-cache,target=/root/.cache,type=volume"
 	],
 	"customizations": {
 		"vscode": {
