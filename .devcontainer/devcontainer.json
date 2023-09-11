@@ -11,7 +11,11 @@
 		// Preserve Github CLI storage
 		"source=therepo-dot-config,target=/root/.config,type=volume",
 		// Preserve kubectl
-		"source=therepo-kubectl,target=/root/.kube,type=volume"
+		"source=therepo-kubectl,target=/root/.kube,type=volume",
+		// Preserve cargo
+		"source=the-repo-cargo,target=/root/.cargo,type=volume"
+		// Preserve git config
+		"source=the-repo-git,target=/root/.git,type=volume"
 	],
 	"customizations": {
 		"vscode": {
