@@ -29,7 +29,6 @@ crates_repository(
         "anyhow": crate.spec(
             version = "1.0.68",
         ),
-        
         "clap": crate.spec(
             features = [
                 "derive",
