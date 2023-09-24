@@ -11,6 +11,7 @@ rust_binary(
     edition = "2021",
     deps = [
         "@crate_index//:anyhow",
+        "@crate_index//:clap",
         "@crate_index//:lazy_static",
         "@crate_index//:toml",
         "@crate_index//:serde",
@@ -22,5 +23,6 @@ rust_binary(
 
 rust_test(
     name = "k8s-upgrader-test",
+    size = "large",
     crate = ":k8s-upgrader",
 )
