@@ -133,6 +133,11 @@ function(params) {
     labels: pa._config.commonLabels,
   },
 
+  _metadata_no_ns:: {
+    name: pa._config.name,
+    labels: pa._config.commonLabels,
+  },
+
   apiService: {
     apiVersion: 'apiregistration.k8s.io/v1',
     kind: 'APIService',
@@ -233,7 +238,6 @@ function(params) {
       args: [
         '--cert-dir=/var/run/serving-cert',
         '--config=/etc/adapter/config.yaml',
-        '--logtostderr=true',
         '--metrics-relist-interval=1m',
         '--prometheus-url=' + pa._config.prometheusURL,
         '--secure-port=6443',
@@ -296,7 +300,12 @@ function(params) {
           },
         },
         template: {
-          metadata: { labels: pa._config.commonLabels },
+          metadata: {
+            annotations: {
+              'checksum.config/md5': std.md5(std.manifestYamlDoc(pa._config.config)),
+            },
+            labels: pa._config.commonLabels,
+          },
           spec: {
             containers: [c],
             serviceAccountName: $.serviceAccount.metadata.name,
@@ -322,7 +331,7 @@ function(params) {
   clusterRole: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRole',
-    metadata: pa._metadata,
+    metadata: pa._metadata_no_ns,
     rules: [{
       apiGroups: [''],
       resources: ['nodes', 'namespaces', 'pods', 'services'],
@@ -333,7 +342,7 @@ function(params) {
   clusterRoleBinding: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRoleBinding',
-    metadata: pa._metadata,
+    metadata: pa._metadata_no_ns,
     roleRef: {
       apiGroup: 'rbac.authorization.k8s.io',
       kind: 'ClusterRole',
@@ -349,7 +358,7 @@ function(params) {
   clusterRoleBindingDelegator: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRoleBinding',
-    metadata: pa._metadata {
+    metadata: pa._metadata_no_ns {
       name: 'resource-metrics:system:auth-delegator',
     },
     roleRef: {
@@ -367,7 +376,7 @@ function(params) {
   clusterRoleServerResources: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRole',
-    metadata: pa._metadata {
+    metadata: pa._metadata_no_ns {
       name: 'resource-metrics-server-resources',
     },
     rules: [{
@@ -380,7 +389,7 @@ function(params) {
   clusterRoleAggregatedMetricsReader: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRole',
-    metadata: pa._metadata {
+    metadata: pa._metadata_no_ns {
       name: 'system:aggregated-metrics-reader',
       labels+: {
         'rbac.authorization.k8s.io/aggregate-to-admin': 'true',

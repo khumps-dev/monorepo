@@ -22,10 +22,10 @@ local template = grafana.template;
         name='type',
         datasource='$datasource',
         query='label_values(namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload=~".+"}, workload_type)' % $._config.clusterLabel,
-        current='deployment',
+        current='',
         hide='',
         refresh=2,
-        includeAll=false,
+        includeAll=true,
         sort=0
       ) + {
         auto: false,
@@ -63,32 +63,32 @@ local template = grafana.template;
         |||
           (sum(irate(container_network_receive_bytes_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace"}[%(grafanaIntervalVar)s])
           * on (namespace,pod)
-          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type="$type"}) by (workload))
+          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type=~"$type"}) by (workload))
         ||| % $._config,
         |||
           (sum(irate(container_network_transmit_bytes_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace"}[%(grafanaIntervalVar)s])
           * on (namespace,pod)
-          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type="$type"}) by (workload))
+          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type=~"$type"}) by (workload))
         ||| % $._config,
         |||
           (sum(irate(container_network_receive_packets_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace"}[%(grafanaIntervalVar)s])
           * on (namespace,pod)
-          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type="$type"}) by (workload))
+          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type=~"$type"}) by (workload))
         ||| % $._config,
         |||
           (sum(irate(container_network_transmit_packets_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace"}[%(grafanaIntervalVar)s])
           * on (namespace,pod)
-          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type="$type"}) by (workload))
+          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type=~"$type"}) by (workload))
         ||| % $._config,
         |||
           (sum(irate(container_network_receive_packets_dropped_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace"}[%(grafanaIntervalVar)s])
           * on (namespace,pod)
-          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type="$type"}) by (workload))
+          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type=~"$type"}) by (workload))
         ||| % $._config,
         |||
           (sum(irate(container_network_transmit_packets_dropped_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace"}[%(grafanaIntervalVar)s])
           * on (namespace,pod)
-          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type="$type"}) by (workload))
+          group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload_type=~"$type"}) by (workload))
         ||| % $._config,
       ];
 
@@ -131,7 +131,7 @@ local template = grafana.template;
         sum(
           node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{%(clusterLabel)s="$cluster", namespace="$namespace"}
         * on(namespace,pod)
-          group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type="$type"}
+          group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type=~"$type"}
         ) by (workload, workload_type)
       ||| % $._config;
 
@@ -139,18 +139,18 @@ local template = grafana.template;
         sum(
           kube_pod_container_resource_requests{%(kubeStateMetricsSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace", resource="cpu"}
         * on(namespace,pod)
-          group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type="$type"}
+          group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type=~"$type"}
         ) by (workload, workload_type)
       ||| % $._config;
 
-      local podCountQuery = 'count(namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type="$type"}) by (workload, workload_type)' % $._config;
+      local podCountQuery = 'count(namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type=~"$type"}) by (workload, workload_type)' % $._config;
       local cpuLimitsQuery = std.strReplace(cpuRequestsQuery, 'requests', 'limits');
 
       local memUsageQuery = |||
         sum(
             container_memory_working_set_bytes{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace", container!="", image!=""}
           * on(namespace,pod)
-            group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type="$type"}
+            group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", namespace="$namespace", workload_type=~"$type"}
         ) by (workload, workload_type)
       ||| % $._config;
       local memRequestsQuery = std.strReplace(cpuRequestsQuery, 'cpu', 'memory');
@@ -164,6 +164,7 @@ local template = grafana.template;
       g.dashboard(
         '%(dashboardNamePrefix)sCompute Resources / Namespace (Workloads)' % $._config.grafanaK8s,
         uid=($._config.grafanaDashboardIDs['k8s-resources-workloads-namespace.json']),
+        datasource_regex=$._config.datasourceFilterRegex,
       )
       .addRow(
         g.row('CPU Usage')
@@ -292,7 +293,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (sum(irate(container_network_receive_bytes_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('Bps') },
@@ -302,7 +303,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (sum(irate(container_network_transmit_bytes_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('Bps') },
@@ -315,7 +316,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (avg(irate(container_network_receive_bytes_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('Bps') },
@@ -325,7 +326,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (avg(irate(container_network_transmit_bytes_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('Bps') },
@@ -338,7 +339,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (sum(irate(container_network_receive_packets_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('pps') },
@@ -348,7 +349,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (sum(irate(container_network_transmit_packets_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('pps') },
@@ -361,7 +362,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (sum(irate(container_network_receive_packets_dropped_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('pps') },
@@ -371,7 +372,7 @@ local template = grafana.template;
           g.queryPanel(|||
             (sum(irate(container_network_transmit_packets_dropped_total{%(cadvisorSelector)s, %(clusterLabel)s="$cluster", namespace="$namespace"}[%(grafanaIntervalVar)s])
             * on (namespace,pod)
-            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type="$type"}) by (workload))
+            group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{%(clusterLabel)s="$cluster", %(namespaceLabel)s="$namespace", workload=~".+", workload_type=~"$type"}) by (workload))
           ||| % $._config, '{{workload}}') +
           g.stack +
           { yaxes: g.yaxes('pps') },
