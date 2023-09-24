@@ -347,7 +347,7 @@
                     },
                     "editorMode": "builder",
                     "expr": "mikrotik_system_free_hdd_space{name=\"$device\"}",
-                    "legendFormat": "free",
+                    "legendFormat": "{{name}} free",
                     "range": true,
                     "refId": "Free"
                 },
