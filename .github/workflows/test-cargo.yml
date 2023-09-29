@@ -1,0 +1,21 @@
+name: "build devcontainer"
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: arc-runner-set
+    container:
+      image: rust:1.72-buster
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - if: ${{ failure() }}
+        run: 'echo "::error:: please format code with cargo fmt --all and commit the changes"'
+      - run: cargo build --all-targets
+      - run: cargo test --all-targets
