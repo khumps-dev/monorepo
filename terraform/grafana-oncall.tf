@@ -5,6 +5,7 @@ resource "helm_release" "grafana-oncall-dev" {
   namespace        = "grafana-oncall"
   create_namespace = true
   timeout          = "600"
+  version          = "1.3.38"
   set {
     name  = "base_url"
     value = "oncall-dev.khumps.dev"
