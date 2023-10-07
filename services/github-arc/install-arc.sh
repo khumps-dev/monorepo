@@ -12,10 +12,10 @@ arc-runner-set \
 --create-namespace \
 --set githubConfigUrl="https://github.com/khumps-dev" \
 --set githubConfigSecret=gha-arc-config \
---set minRunners=1 \
+--set minRunners=4 \
 --set containerMode.type=kubernetes \
 --set containerMode.kubernetesModeWorkVolumeClaim.accessModes[0]="ReadWriteOnce" \
 --set containerMode.kubernetesModeWorkVolumeClaim.storageClassName=longhorn \
---set containerMode.kubernetesModeWorkVolumeClaim.resources.requests.storage=1Gi \
+--set containerMode.kubernetesModeWorkVolumeClaim.resources.requests.storage=2Gi \
 --set template.spec.securityContext.fsGroup=123 \
 oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
