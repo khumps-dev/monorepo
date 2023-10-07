@@ -2,48 +2,36 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Generate rust-project.json",
-            "command": "bazel",
+            "type": "cargo",
+            "command": "watch",
             "args": [
-                "run",
-                "@rules_rust//tools/rust_analyzer:gen_rust_project"
+                "-c",
+                "-x",
+                "check --all-features --all-targets"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "group": "build",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "never",
-                "panel": "dedicated"
-            },
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
+            "problemMatcher": [
+                "$rustc",
+                "$rust-panic"
+            ],
+            "label": "Cargo Watch"
         },
         {
-            "label": "Repin rust dependencies",
-            "command": "bazel",
+            "type": "cargo",
+            "command": "fmt",
             "args": [
-                "sync",
-                "--only=crate_index"
+                "--all"
             ],
-            "options": {
-                "env": {
-                    "CARGO_BAZEL_REPIN": "1"
-                }
-            }
-        },
-        {
-            "label": "Watch Build All",
-            "command": "ibazel",
-            "args": [
-                "-run_command_before",
-                "clear",
-                "build",
-                "//..."
-            ],
+            "label": "Cargo Format",
             "problemMatcher": []
-        }
+        },
+        {
+            "type": "cargo",
+            "command": "install",
+            "args": [
+                "cargo-watch"
+            ],
+            "label": "Install cargo-watch",
+            "problemMatcher": []
+        },
     ]
 }
