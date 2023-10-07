@@ -18,19 +18,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     zip \
     zlib1g-dev
 
-# Bazel
-RUN wget https://github.com/bazelbuild/bazel/releases/download/6.3.2/bazel-6.3.2-installer-linux-x86_64.sh -O bazel-installer.sh
-RUN chmod +x ./bazel-installer.sh && ./bazel-installer.sh
-RUN echo "source /usr/local/lib/bazel/bin/bazel-complete.bash" >> ~/.bashrc
-
-# Buildifier
-RUN wget https://github.com/bazelbuild/buildtools/releases/download/5.1.0/buildifier-linux-amd64 -O buildifier
-RUN install buildifier /usr/local/bin && rm buildifier
-
-# Buildozer
-RUN wget https://github.com/bazelbuild/buildtools/releases/download/5.1.0/buildozer-linux-amd64 -O buildozer
-RUN install buildozer /usr/local/bin && rm buildozer
-
 # Terraform
 RUN wget https://releases.hashicorp.com/terraform/1.3.6/terraform_1.3.6_linux_amd64.zip -O terraform
 RUN unzip terraform -d /usr/local/bin
@@ -44,10 +31,6 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/g
 RUN wget https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
 RUN install kubectl /usr/local/bin && rm kubectl
 
-# ibazel
-RUN wget https://github.com/bazelbuild/bazel-watcher/releases/download/v0.23.7/ibazel_linux_amd64 -O ibazel
-RUN install ibazel /usr/local/bin && rm ibazel
-
 # jsonnet bundler
 RUN wget https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v0.5.1/jb-linux-amd64 -O jb
 RUN install jb /usr/local/bin && rm jb
@@ -58,7 +41,7 @@ RUN tar xzf gojsontoyaml.tar.gz gojsontoyaml && install gojsontoyaml /usr/local/
 
 # Rust (for tooling)
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
-    -y --no-modify-path --default-toolchain 1.65.0 --profile minimal --component clippy,rust-src,rustfmt
+    -y --no-modify-path --default-toolchain 1.73.0 --component clippy,rust-src,rustfmt
 RUN echo "source $HOME/.cargo/env" >> /root/.bashrc
 
 # Helm
