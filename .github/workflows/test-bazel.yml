@@ -1,0 +1,16 @@
+name: "test bazel"
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: arc-runner-set
+    container:
+      image: gcr.io/bazel-public/bazel:latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - run: "bazel build //..."
