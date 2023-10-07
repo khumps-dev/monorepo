@@ -503,7 +503,9 @@ async fn handle_node_upgrade(
     Ok(())
 }
 
+#[cfg(feature = "hw_test")]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_drain_undrain() {
     let singularity001 = get_test_node();
 
@@ -523,7 +525,9 @@ async fn test_drain_undrain() {
     }
 }
 
+#[cfg(feature = "hw_test")]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_wait_for_reboot() {
     let test_node = get_test_node();
 
@@ -541,7 +545,9 @@ async fn test_wait_for_reboot() {
 //         .expect("waiting for node upgrade");
 // }
 
+#[cfg(feature = "hw_test")]
 #[tokio::test]
+#[serial_test::serial]
 async fn test_get_microk8s_version() {
     let test_node = get_test_node();
 
@@ -551,6 +557,7 @@ async fn test_get_microk8s_version() {
     println!("Version: {version}");
 }
 
+#[cfg(feature = "hw_test")]
 fn get_test_node() -> SingularityNode {
     SingularityNode {
         name: "singularity001".to_string(),
