@@ -500,13 +500,17 @@ async fn handle_node_upgrade(
     node: &SingularityNode,
     target_version: &Microk8sVersion,
 ) -> Result<()> {
+    let current_version = get_microk8s_train(node).await?;
     upgrade_packages(&node).await?;
-    drain_node(node).await?;
-    stop_microk8s(node).await?;
-    upgrade_microk8s(node, target_version).await?;
-    upgrade_firmware(node).await?;
-    reboot_node(node).await?;
-    wait_for_reboot(node).await?;
+    if &current_version != target_version {
+        drain_node(node).await?;
+        stop_microk8s(node).await?;
+        upgrade_microk8s(node, target_version).await?;
+        // wait_for_reboot(node).await?;
+        // reboot_node(node).await?;
+    } else {
+        println!("{node} is already on {target_version}, skipping drain and upgrade");
+    }
     start_microk8s(node).await?;
     wait_for_node_ready(node).await?;
     undrain_node(node).await?;
