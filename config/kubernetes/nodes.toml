@@ -3,6 +3,7 @@ microk8s_version = "1.28/stable"
 [[singularity_node]]
 name = "singularity001"
 ip_address = "192.168.60.11"
+ignore_firmware = true
 [[singularity_node]]
 name = "singularity002"
 ip_address = "192.168.60.12"

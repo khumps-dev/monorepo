@@ -21,6 +21,8 @@ struct K8sConfig {
 struct SingularityNode {
     name: String,
     ip_address: IpAddr,
+    #[serde(default)]
+    ignore_firmware: bool,
 }
 
 #[derive(Parser)]
@@ -273,10 +275,22 @@ async fn upgrade_packages(node: &SingularityNode) -> Result<()> {
 }
 
 async fn upgrade_firmware(node: &SingularityNode) -> Result<()> {
+    if node.ignore_firmware {
+        println!("This node skips firmware upgrades.");
+        return Ok(());
+    }
+
     let upgrade_cmd = new_ssh_command(node)
         .stdout(Stdio::null())
         .stderr(Stdio::null())
-        .args(vec!["sudo", "fwupdmgr", "update", "-y", "--offline"])
+        .args(vec![
+            "sudo",
+            "fwupdmgr",
+            "update",
+            "-y",
+            "--offline",
+            "--no-reboot-check",
+        ])
         .output()
         .await?;
 
@@ -486,17 +500,13 @@ async fn handle_node_upgrade(
     node: &SingularityNode,
     target_version: &Microk8sVersion,
 ) -> Result<()> {
-    let current_version = get_microk8s_train(node).await?;
     upgrade_packages(&node).await?;
-    if &current_version == target_version {
-        println!("{node} is already on {target_version}, skipping drain and upgrade");
-        return Ok(());
-    }
     drain_node(node).await?;
     stop_microk8s(node).await?;
     upgrade_microk8s(node, target_version).await?;
-    // reboot_node(node).await?;
-    // wait_for_reboot(node).await?;
+    upgrade_firmware(node).await?;
+    reboot_node(node).await?;
+    wait_for_reboot(node).await?;
     start_microk8s(node).await?;
     wait_for_node_ready(node).await?;
     undrain_node(node).await?;
@@ -564,5 +574,6 @@ fn get_test_node() -> SingularityNode {
         ip_address: "192.168.60.11"
             .parse()
             .expect("serializing singularity001 ip address"),
+        ignore_firmware: true,
     }
 }
