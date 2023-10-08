@@ -1,4 +1,4 @@
-name: "build devcontainer"
+name: "Validate PR"
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
@@ -6,7 +6,7 @@ on: # rebuild any PRs and main branch changes
       - main
 
 jobs:
-  build:
+  build-and-validate-rust:
     runs-on: arc-runner-set
     container:
       image: rust:1.73-buster
