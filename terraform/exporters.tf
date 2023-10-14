@@ -76,7 +76,7 @@ variable "mikrotik_password" {
 
 resource "kubernetes_config_map_v1" "mikrotik-exporter" {
   metadata {
-    generate_name = "mikrotik-exporter"
+    generate_name = "mikrotik-exporter-"
     namespace     = "exporters"
   }
 
@@ -90,6 +90,7 @@ resource "kubernetes_config_map_v1" "mikrotik-exporter" {
         address  = device.address
         user     = "prometheus"
         password = var.mikrotik_password
+        port     = 8728
       }]
 
       features = {
@@ -146,6 +147,39 @@ resource "kubernetes_manifest" "mikrotik_monitor" {
       endpoints = [
         {
           port = "exporter"
+        }
+      ]
+    }
+  }
+}
+
+
+resource "kubernetes_manifest" "mikrotik_prometheus_rules" {
+  manifest = {
+    apiVersion = "monitoring.coreos.com/v1"
+    kind       = "PrometheusRule"
+    metadata = {
+      name      = "mikrotik"
+      namespace = "exporters"
+      labels = {
+        service = "exporters"
+        kind    = "mikrotik"
+      }
+    }
+    spec = {
+      groups = [
+        {
+          name = "mikrotik-exporter"
+          rules = [
+            {
+              alert = "Mikrotik Collector Failing for devices"
+              expr  = "count(mikrotik_scrape_collector_success == 0) > 0"
+              annotations = {
+                description = "Some Mikrotik devices are failing to be polled by Prometheus."
+                runbook     = "Check the logs of the exporter: kubectl -n exporters logs -f deployment/mikrotik"
+              }
+            }
+          ]
         }
       ]
     }

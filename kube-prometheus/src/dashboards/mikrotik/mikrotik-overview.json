@@ -28,6 +28,125 @@
     "liveNow": false,
     "panels": [
         {
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 12,
+            "title": "Global",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "P1809F7CD0C75ACF3"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "dark-red",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.75
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 3,
+                "w": 3,
+                "x": 0,
+                "y": 1
+            },
+            "id": 10,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/^A$/",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.5.3",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "P1809F7CD0C75ACF3"
+                    },
+                    "editorMode": "builder",
+                    "expr": "count(mikrotik_scrape_collector_success)",
+                    "hide": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "Total"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "P1809F7CD0C75ACF3"
+                    },
+                    "editorMode": "code",
+                    "expr": "count(mikrotik_scrape_collector_success == 1)",
+                    "hide": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "Succeeding"
+                },
+                {
+                    "datasource": {
+                        "name": "Expression",
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$Succeeding/$Total",
+                    "hide": false,
+                    "refId": "A",
+                    "type": "math"
+                }
+            ],
+            "title": "Collector Success",
+            "type": "stat"
+        },
+        {
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 4
+            },
+            "id": 11,
+            "panels": [],
+            "repeat": "device",
+            "repeatDirection": "h",
+            "title": "$device",
+            "type": "row"
+        },
+        {
             "datasource": {
                 "type": "prometheus",
                 "uid": "P1809F7CD0C75ACF3"
@@ -54,7 +173,7 @@
                 "h": 3,
                 "w": 3,
                 "x": 0,
-                "y": 0
+                "y": 5
             },
             "id": 9,
             "options": {
@@ -71,7 +190,7 @@
                 },
                 "textMode": "name"
             },
-            "pluginVersion": "9.5.2",
+            "pluginVersion": "9.5.3",
             "targets": [
                 {
                     "datasource": {
@@ -118,7 +237,7 @@
                 "h": 3,
                 "w": 4,
                 "x": 3,
-                "y": 0
+                "y": 5
             },
             "id": 2,
             "options": {
@@ -135,7 +254,7 @@
                 },
                 "textMode": "value"
             },
-            "pluginVersion": "9.5.2",
+            "pluginVersion": "9.5.3",
             "targets": [
                 {
                     "datasource": {
@@ -215,7 +334,7 @@
                 "h": 8,
                 "w": 17,
                 "x": 7,
-                "y": 0
+                "y": 5
             },
             "id": 5,
             "options": {
@@ -323,7 +442,7 @@
                 "h": 8,
                 "w": 7,
                 "x": 0,
-                "y": 3
+                "y": 8
             },
             "id": 7,
             "options": {
@@ -429,7 +548,7 @@
                 "h": 7,
                 "w": 24,
                 "x": 0,
-                "y": 11
+                "y": 16
             },
             "id": 4,
             "options": {
@@ -485,7 +604,7 @@
         "list": [
             {
                 "current": {
-                    "selected": true,
+                    "selected": false,
                     "text": "sw01.khumps.dev",
                     "value": "sw01.khumps.dev"
                 },
