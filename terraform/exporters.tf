@@ -55,6 +55,19 @@ resource "kubernetes_deployment_v1" "mikrotik_exporter" {
   }
 }
 
+
+locals {
+  network_devices = [
+    {
+      name    = "r01.khumps.dev"
+      address = "192.168.60.1"
+    },
+    {
+      name    = "sw01.khumps.dev"
+      address = "192.168.60.2"
+    }
+  ]
+}
 variable "mikrotik_password" {
   type        = string
   description = "api password for mikrotik router"
@@ -72,20 +85,12 @@ resource "kubernetes_config_map_v1" "mikrotik-exporter" {
 
   data = {
     "config.yaml" = yamlencode({
-      devices = [
-        {
-          name     = "r01.khumps.dev"
-          address  = "192.168.60.1"
-          user     = "prometheus"
-          password = var.mikrotik_password
-        },
-        {
-          name     = "sw01.khumps.dev"
-          address  = "192.168.60.2"
-          user     = "prometheus"
-          password = var.mikrotik_password
-        }
-      ]
+      devices = [for device in local.network_devices : {
+        name     = device.name
+        address  = device.address
+        user     = "prometheus"
+        password = var.mikrotik_password
+      }]
 
       features = {
         dhcp   = true,
