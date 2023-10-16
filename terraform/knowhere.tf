@@ -572,11 +572,8 @@ resource "kubernetes_deployment" "knowhere_sonarr" {
         }
         volume {
           name = "sonarr-config"
-          iscsi {
-            iqn           = "iqn.2021-06.freenas.fishnet:sonarr"
-            target_portal = local.iscsi_target
-            lun           = 0
-            fs_type       = "ext4"
+          persistent_volume_claim {
+            claim_name = local.sonarr-name
           }
         }
         volume {
@@ -586,6 +583,22 @@ resource "kubernetes_deployment" "knowhere_sonarr" {
             server = local.nfs_host
           }
         }
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim" "sonarr" {
+  metadata {
+    name      = local.sonarr-name
+    namespace = local.knowhere_namespace
+  }
+  spec {
+    access_modes       = ["ReadOnlyMany"]
+    storage_class_name = local.storage_class_name
+    resources {
+      requests = {
+        storage : "20Gi"
       }
     }
   }
