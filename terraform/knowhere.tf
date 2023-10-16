@@ -594,8 +594,8 @@ resource "kubernetes_persistent_volume_claim" "sonarr" {
     namespace = local.knowhere_namespace
   }
   spec {
-    access_modes       = ["ReadOnlyMany"]
-    storage_class_name = local.storage_class_name
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
     resources {
       requests = {
         storage : "20Gi"
