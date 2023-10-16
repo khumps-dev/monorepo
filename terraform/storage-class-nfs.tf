@@ -1,7 +1,8 @@
 locals {
-  storage_class_name = "nfs-freenas"
-  nfs_host           = "192.168.60.5"
-  iscsi_target       = "192.168.60.5:3260"
+  storage_class_name          = "nfs-freenas"
+  nfs_host                    = "192.168.60.5"
+  iscsi_target                = "192.168.60.5:3260"
+  longhorn_storage_class_name = "longhorn"
 }
 resource "helm_release" "nfs-provisioner" {
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
