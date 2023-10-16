@@ -202,6 +202,9 @@ resource "kubernetes_deployment" "knowhere_jackett" {
   }
   spec {
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         app : local.jackett-name
@@ -235,13 +238,27 @@ resource "kubernetes_deployment" "knowhere_jackett" {
         }
         volume {
           name = "jackett-config"
-          iscsi {
-            iqn           = "iqn.2021-06.freenas.fishnet:jackett"
-            target_portal = local.iscsi_target
-            lun           = 3
-            fs_type       = "ext4"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.jackett.metadata[0].name
           }
+
         }
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim_v1" "jackett" {
+  metadata {
+    name      = local.jackett-name
+    namespace = local.knowhere_namespace
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
+    resources {
+      requests = {
+        storage : "1Gi"
       }
     }
   }
