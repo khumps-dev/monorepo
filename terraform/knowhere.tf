@@ -447,17 +447,14 @@ resource "kubernetes_deployment" "knowhere_radarr" {
               port   = "7878"
               scheme = "HTTP"
             }
-            initial_delay_seconds = 60
+            initial_delay_seconds = 45
             period_seconds        = 20
           }
         }
         volume {
           name = "radarr-config"
-          iscsi {
-            iqn           = "iqn.2021-06.freenas.fishnet:radarr"
-            target_portal = local.iscsi_target
-            lun           = 1
-            fs_type       = "ext4"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.radarr.metadata[0].name
           }
         }
         volume {
@@ -467,6 +464,22 @@ resource "kubernetes_deployment" "knowhere_radarr" {
             server = local.nfs_host
           }
         }
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim_v1" "radarr" {
+  metadata {
+    name      = local.radarr-name
+    namespace = local.knowhere_namespace
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
+    resources {
+      requests = {
+        storage : "20Gi"
       }
     }
   }
