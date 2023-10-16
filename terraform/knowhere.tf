@@ -320,18 +320,30 @@ resource "kubernetes_deployment" "knowhere_plexpy" {
           volume_mount {
             mount_path = "/config"
             name       = "plexpy-config"
-            //			sub_path   = "knowhere/plexpy"
           }
         }
         volume {
           name = "plexpy-config"
-          iscsi {
-            iqn           = "iqn.2021-06.freenas.fishnet:plexpy"
-            target_portal = local.iscsi_target
-            lun           = 2
-            fs_type       = "ext4"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.plexpy.metadata[0].name
           }
         }
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim_v1" "plexpy" {
+  metadata {
+    name      = local.plexpy-name
+    namespace = local.knowhere_namespace
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
+    resources {
+      requests = {
+        storage : "10Gi"
       }
     }
   }
