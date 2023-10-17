@@ -17,6 +17,9 @@ resource "kubernetes_deployment" "unifi" {
   }
   spec {
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         app : local.unifi_name
@@ -31,7 +34,7 @@ resource "kubernetes_deployment" "unifi" {
       spec {
         container {
           name  = "controller"
-          image = "lscr.io/linuxserver/unifi-controller:7.3.76"
+          image = "lscr.io/linuxserver/unifi-network-application:7.5.174"
           env {
             name  = "PUID"
             value = "1000"
@@ -40,20 +43,108 @@ resource "kubernetes_deployment" "unifi" {
             name  = "PGID"
             value = "1004"
           }
+          env {
+            name  = "MONGO_USER"
+            value = "unifi"
+          }
+          env {
+            name  = "MONGO_PASS"
+            value = "unifimongopass"
+          }
+          env {
+            name  = "MONGO_HOST"
+            value = "localhost"
+          }
+          env {
+            name  = "MONGO_PORT"
+            value = "27017"
+          }
+          env {
+            name  = "MONGO_DBNAME"
+            value = "unifi"
+          }
           volume_mount {
             mount_path = "/config"
-            name       = "config"
+            name       = "unifi-config"
+          }
+        }
+        container {
+          name  = "mongodb"
+          image = "mongo:6.0"
+          volume_mount {
+            mount_path = "/data/db"
+            name       = "mongodb-config"
+          }
+          volume_mount {
+            mount_path = "/docker-entrypoint-initdb.d/init-mongo.js"
+            name       = "mongodb-init"
+            sub_path   = "init-mongo.js"
+            read_only  = true
+          }
+        }
+
+        volume {
+          name = "unifi-config"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.unifi.metadata[0].name
           }
         }
         volume {
-          name = "config"
-          nfs {
-            path   = "/mnt/Main/kevin/unifi-controller"
-            server = local.nfs_host
+          name = "mongodb-config"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.unifi-mongodb.metadata[0].name
+          }
+        }
+        volume {
+          name = "mongodb-init"
+          config_map {
+            name = kubernetes_config_map_v1.unifi-mongodb-init.metadata[0].name
           }
         }
       }
     }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim_v1" "unifi" {
+  metadata {
+    name      = local.unifi_name
+    namespace = local.unifi_name
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
+    resources {
+      requests = {
+        storage : "5Gi"
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim_v1" "unifi-mongodb" {
+  metadata {
+    name      = "${local.unifi_name}-mongodb"
+    namespace = local.unifi_name
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
+    resources {
+      requests = {
+        storage : "5Gi"
+      }
+    }
+  }
+}
+
+resource "kubernetes_config_map_v1" "unifi-mongodb-init" {
+  metadata {
+    name      = "mongodb-init"
+    namespace = local.unifi_name
+  }
+  data = {
+    "init-mongo.js" : "db.getSiblingDB(\"unifi\").createUser({user: \"unifi\", pwd: \"unifimongopass\", roles: [{role: \"dbOwner\", db: \"unifi\"}, {role: \"dbOwner\", db: \"unifi_stat\"}]});"
   }
 }
 
