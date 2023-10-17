@@ -150,11 +150,8 @@ resource "kubernetes_deployment" "plex" {
 
         volume {
           name = "plex-config"
-          iscsi {
-            iqn           = "iqn.2021-06.freenas.fishnet:plex"
-            target_portal = local.iscsi_target
-            lun           = 5
-            fs_type       = "ext4"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.plex.metadata[0].name
           }
         }
         volume {
@@ -171,6 +168,22 @@ resource "kubernetes_deployment" "plex" {
           }
         }
 
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim_v1" "plex" {
+  metadata {
+    name      = local.plex_name
+    namespace = local.plex_name
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = local.longhorn_storage_class_name
+    resources {
+      requests = {
+        storage : "350Gi"
       }
     }
   }
