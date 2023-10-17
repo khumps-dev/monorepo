@@ -2,7 +2,7 @@ locals {
   plex_name          = "plex"
   plex_port          = 32400
   plex_exporter_port = 9594
-  plex_version       = "1.32.5.7349-8f4248874"
+  plex_version       = "1.32.6.7557-1cf77d501"
 }
 resource "kubernetes_namespace" "plex" {
   metadata {
