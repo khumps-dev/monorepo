@@ -26,27 +26,7 @@ local kp =
         ],
       },
       alertmanager+: {
-        config+: {
-          global+: {
-            slack_api_url: std.extVar('ALERTMANAGER_SLACK_URL'),
-          },
-          receivers+: [
-            {
-              name: 'Slack',
-              slack_configs: [
-                {
-                  send_resolved: true,
-                  username: 'Singularity Bot',
-                },
-              ],
-            },
-          ],
-          route+: {
-            routes+: [
-              { receiver: 'Slack' },
-            ],
-          },
-        },
+        config: import 'src/alertmanager/config.jsonnet',
       },
       grafana+:: {
         config+: {  // http://docs.grafana.org/installation/configuration/
