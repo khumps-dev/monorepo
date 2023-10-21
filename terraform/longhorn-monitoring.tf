@@ -41,7 +41,7 @@ resource "kubernetes_manifest" "longhorn_prometheus_rules" {
             { alert = "LonghornVolumeUsageCritical"
               annotations = { description = "Longhorn volume {{$labels.volume}} on {{$labels.node}} is at {{$value}}% used for more than 5 minutes."
               summary = "Longhorn volume capacity is over 90% used." }
-              expr = "100 * (longhorn_volume_usage_bytes / longhorn_volume_capacity_bytes) > 90"
+              expr = "100 * (longhorn_volume_actual_size_bytes / longhorn_volume_capacity_bytes) > 90"
               for  = "5m"
               labels = { issue = " Longhorn volume {{$labels.volume}} usage on {{$labels.node}} is critical."
                 severity = "critical"
