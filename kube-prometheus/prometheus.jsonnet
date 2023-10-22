@@ -84,7 +84,7 @@ local kp =
               kind: 'PersistentVolumeClaim',
               spec: {
                 accessModes: ['ReadWriteOnce'],
-                resources: { requests: { storage: '150Gi' } },
+                resources: { requests: { storage: '200Gi' } },
                 storageClassName: 'longhorn',
               },
             },
