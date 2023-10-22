@@ -37,31 +37,26 @@
     },
   ],
   route: {
+    receiver: 'Default',
+    group_wait: '30s',
+    group_by: ['namespace'],
+    group_interval: '5m',
+    repeat_interval: '12h',
     routes: [
       {
-        receiver: 'Default',
-        group_by: ['namespace'],
-      },
-      {
         receiver: 'Watchdog',
-        matchers: ['alertname="Watchdog"'],
-        continue: false,
+        matchers: ['alertname=Watchdog'],
       },
       {
         receiver: 'null',
-        matchers: ['alertname="InfoInhibitor"'],
-        continue: false,
+        matchers: ['alertname=InfoInhibitor'],
       },
     ],
-    receiver: 'Default',
-    group_wait: '30s',
-    group_interval: '5m',
-    repeat_interval: '12h',
   },
   inhibit_rules: [
     {
-      source_matchers: ['severity="critical"'],
-      target_matchers: ['severity=~"warning|info"'],
+      source_matchers: ['severity=critical'],
+      target_matchers: ['severity=~warning|info'],
       equal:
         [
           'namespace',
@@ -69,8 +64,8 @@
         ],
     },
     {
-      source_matchers: ['severity="warning"'],
-      target_matchers: ['severity="info"'],
+      source_matchers: ['severity=warning'],
+      target_matchers: ['severity=info'],
       equal:
         [
           'namespace',
@@ -78,8 +73,8 @@
         ],
     },
     {
-      source_matchers: ['alertname="InfoInhibitor"'],
-      target_matchers: ['severity="info"'],
+      source_matchers: ['alertname=InfoInhibitor'],
+      target_matchers: ['severity=info'],
       equal: ['namespace'],
     },
   ],
