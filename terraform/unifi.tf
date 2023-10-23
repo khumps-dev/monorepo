@@ -159,7 +159,7 @@ resource "kubernetes_ingress_v1" "unifi" {
     }
   }
   spec {
-    ingress_class_name = "public"
+    ingress_class_name = local.ingress_class_name
     tls {
       hosts = [
         "unifi.internal.khumps.dev"

@@ -63,7 +63,7 @@ resource "kubernetes_ingress_v1" "planetside-tk" {
     }
   }
   spec {
-    ingress_class_name = "public"
+    ingress_class_name = local.ingress_class_name
     tls {
       hosts = [
         "tk.khumps.dev"
