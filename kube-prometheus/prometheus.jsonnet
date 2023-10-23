@@ -63,6 +63,7 @@ local kp =
           },
           Networking: {
             'mikrotik-overview.json': (import 'src/dashboards/mikrotik/mikrotik-overview.json'),
+            'ingress-nginx-overview.json': (import 'src/dashboards/ingress-nginx/primary.json'),
           },
         },
       },

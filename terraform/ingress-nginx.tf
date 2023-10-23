@@ -32,4 +32,15 @@ resource "helm_release" "ingress-nginx" {
     name  = "udp.10001"
     value = "unifi/unifi:10001"
   }
+  set {
+    name  = "controller.metrics.enabled"
+    value = "true"
+    type  = "string"
+  }
+
+  set {
+    name  = "controller.metrics.serviceMonitor.enabled"
+    value = "true"
+    type  = "string"
+  }
 }
