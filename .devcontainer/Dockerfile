@@ -52,6 +52,10 @@ RUN tar xzf helm.tar.gz --strip-components 1 linux-amd64/helm && install helm /u
 RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
 RUN install skaffold /usr/local/bin/
 
+# NVM
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+RUN bash -i -c 'nvm ls-remote && nvm install stable'
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     gh \
     locales \
