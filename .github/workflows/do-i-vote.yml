@@ -1,0 +1,16 @@
+name: Do I Vote Pipeline
+on: push
+jobs:
+  docker:
+    runs-on: arc-runner-set
+    steps:
+      - uses: actions/checkout@master
+      - name: Kaniko build
+        uses: aevea/action-kaniko@master
+        with:
+          registry: ghcr.io
+          image: do-i-vote
+          password: ${{ secrets.GITHUB_TOKEN }}
+          cache: true
+          cache_registry: cache
+          path: src/do-i-vote-fe
