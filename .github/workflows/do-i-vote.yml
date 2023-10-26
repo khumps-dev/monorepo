@@ -3,6 +3,8 @@ on: push
 jobs:
   docker:
     runs-on: arc-runner-set
+    container:
+      image: ubuntu:22.04
     steps:
       - uses: actions/checkout@master
       - name: Kaniko build
