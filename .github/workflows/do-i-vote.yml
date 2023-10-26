@@ -4,7 +4,7 @@ jobs:
   docker:
     runs-on: arc-runner-set
     container:
-      image: ubuntu:22.04
+      image: ghcr.io/actions/actions-runner:latest
     steps:
       - uses: actions/checkout@master
       - name: Kaniko build
