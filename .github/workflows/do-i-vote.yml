@@ -3,14 +3,8 @@ on: push
 jobs:
   docker:
     runs-on: arc-runner-set
+    container:
+      image: gcr.io/kaniko-project/executor
     steps:
-      - uses: actions/checkout@master
-      - name: Kaniko build
-        uses: aevea/action-kaniko@master
-        with:
-          registry: ghcr.io
-          image: do-i-vote
-          password: ${{ secrets.GITHUB_TOKEN }}
-          cache: true
-          cache_registry: cache
-          path: src/do-i-vote-fe
+      - uses: actions/checkout@v4
+      - run: /kaniko/executor
